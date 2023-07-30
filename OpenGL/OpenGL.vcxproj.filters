@@ -13,19 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="src">
-      <UniqueIdentifier>{5b9e7989-8a64-4cdd-9e39-5b5d40c67a03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="notes">
       <UniqueIdentifier>{8d30e3a7-6388-4a6e-aae7-3474ab43fcef}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="application.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Application.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="setupOpenGL.txt" />
   </ItemGroup>
 </Project>
