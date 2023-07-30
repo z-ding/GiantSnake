@@ -1,0 +1,18 @@
+glfw
+1. download glfw and create a c++ project
+2. create a new cpp file and set up main function
+3. go to glfw documentation and copy the code to create window to cpp file
+4. in the download, the include folder and lib matters for our project. open a new folder in our project called dependancies
+(parallel to sln file) make a folder called GLFW in dependancies folder
+5. for this project, copy the 3.lib file (static linking) copy include and lib folder to dependancies
+6. set up the linker in visual studio
+  - right click the project and click properties
+  - choose all configurations and winows 64/32 appropriately
+  - under c/c++ General, add include directories: type $(SolutionDir)dependancies\GLFW\include to make it reative to our sln file
+  ($(SolutionDir)) is the solution dir automatically set up by visual studio (in macro)
+  to make sure it's correct: click edit and copy the path to file explorer. the #include <GLFW/glfw3.h> should work after this step
+  - under linker in general, specify additional library directories. type $(SolutionDir)dependancies\GLFW\lib-vc2022
+  - under linker input, we will specify which file we are going to link. remove all the stuff there and type in glfw3.lib; opengl64.lib
+glew
+1. download glew and paste it to dependancy folder
+2. do same set up as glfw
