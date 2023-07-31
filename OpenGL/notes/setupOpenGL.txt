@@ -13,6 +13,13 @@ glfw
   to make sure it's correct: click edit and copy the path to file explorer. the #include <GLFW/glfw3.h> should work after this step
   - under linker in general, specify additional library directories. type $(SolutionDir)dependancies\GLFW\lib-vc2022
   - under linker input, we will specify which file we are going to link. remove all the stuff there and type in  glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;glfw3.lib
+7. testing: draw a triangle
+        under the rendering part 
+        glBegin(GL_TRIANGLES);
+        glVertex2f(-0.5f, -0.5f);
+        glVertex2f(0.0f, 0.5f);
+        glVertex2f(0.5f, 0.5f);
+        glEnd();
 glew
 1. download glew and paste it to dependancy folder
 2. do same set up as glfw
