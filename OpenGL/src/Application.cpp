@@ -1,8 +1,12 @@
+#include <glew.h>
 #include <glfw3.h>
+#include <iostream>
 #include "snake.h"
 #define WIDTH 800
 #define HEIGHT 800
 #define GRIDS 100
+
+
 
 int main(void)
 {
@@ -19,22 +23,25 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-
+    if (glewInit() != GLEW_OK) {
+        std::cout << "error glew init" << std::endl;
+    }
     /* Loop until the user closes the window */
-    snake* player = new snake(0, 0);
+    snake* player = new snake(0.0f, 0.0f);
+    int n = 0;
+
+    while (n < 3) {
+        player->emplace_back();
+        n++;
+    }
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
         // Draw the snake
-        glColor3f(1.0f, 0.0f, 0.0f);       
-        snakenode* current = player->getehad();
-        std::tuple<int, int, char, snakenode*, snakenode*> info = current->getter();
-        glRectf(std::get<0>(info), std::get<1>(info), std::get<0>(info) + WIDTH / GRIDS, std::get<1>(info) + HEIGHT / GRIDS);
-
+        player->drawsnake();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 

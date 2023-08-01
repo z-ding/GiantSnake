@@ -22,4 +22,5 @@ glfw
         glEnd();
 glew
 1. download glew and paste it to dependancy folder
-2. do same set up as glfw
+2. do same set up as glfw, link glew32s.lib
+3. add "GLEW_static" in preprocessor
