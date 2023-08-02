@@ -19,24 +19,27 @@ snakenode::~snakenode() {
 snode snakenode::getter() {
 	return { x,y, r,text,prev,next};
 };
-void connectnodes(snakenode* n1, snakenode* n2) {
-	n1->next = n2;
+void connectnodes(std::shared_ptr<snakenode> n1, std::shared_ptr<snakenode> n2) {
+	n1 -> next = n2;
 	n2->prev = n1;
 };
 
-snake::snake(int _x, int _y) {
-	head = new snakenode('h',_x,_y);
+snake::snake(int _x, int _y) {	
+	head = std::make_shared<snakenode>('h', _x, _y);
 	tail = head;
 }
-snakenode* snake::gethead() {
+snake::~snake() {
+
+}
+std::shared_ptr<snakenode> snake::gethead() {
 	return head;
 }
-snakenode* snake::gettail() {
+std::shared_ptr<snakenode> snake::gettail() {
 	return tail;
 }
 
 void snake::emplace_back() {//add a node on the back
-	snakenode* node = new snakenode('g');//green body node
+	std::shared_ptr<snakenode> node = std::make_shared<snakenode>('g');//green body node
 	connectnodes(tail, node);
 	tail = node;
 }
@@ -60,7 +63,7 @@ void drawCircle(float x, float y, float radius, char type) {
 }
 
 void snake::drawsnake(float prevx, float prevy) {
-	snakenode* current = head;
+	std::shared_ptr<snakenode> current = head;
 	while (current != nullptr) {//simulation, moving upwnward
 		snode node = current->getter();
 		if (current != head) {

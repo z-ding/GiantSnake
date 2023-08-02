@@ -27,7 +27,7 @@ int main(void)
         std::cout << "error glew init" << std::endl;
     }
     /* Loop until the user closes the window */
-    snake* player = new snake(0.0f, 0.0f);
+    std::unique_ptr<snake> player = std::make_unique<snake>(0.0f, 0.0f);
     int n = 0;
 
     while (n < 5) {
