@@ -6,8 +6,6 @@
 #define HEIGHT 800
 #define GRIDS 100
 
-
-
 int main(void)
 {
     GLFWwindow* window;
@@ -32,16 +30,19 @@ int main(void)
     snake* player = new snake(0.0f, 0.0f);
     int n = 0;
 
-    while (n < 3) {
+    while (n < 5) {
         player->emplace_back();
         n++;
     }
+    
+
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
         // Draw the snake
-        player->drawsnake();
+        snode playerhead = player->gethead()->getter();
+        player->drawsnake(playerhead.x, playerhead.y);
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 

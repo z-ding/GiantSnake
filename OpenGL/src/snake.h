@@ -3,12 +3,13 @@
 #include <glfw3.h>
 #include <tuple>
 #include <iostream>
-#include <vector>
+#include <memory>
+struct snode;
 class snakenode {
 private:
-	int x;// x coordinate
-	int y;// y coordinate
-	int r;//radius
+	float x;// x coordinate
+	float y;// y coordinate
+	float r;//radius
 	char text;//text
 	snakenode* prev;// previous node
 	snakenode* next;//next node
@@ -16,9 +17,17 @@ public:
 	snakenode(char c);//constructor without location
 	snakenode(char c, int _x, int _y);//constructor with location
 	~snakenode();//destructor
-	std::tuple<int, int,char,snakenode*,snakenode*> getter();	
+	snode getter();	
 	friend void connectnodes(snakenode* n1, snakenode* n2);
 	
+};
+struct snode {
+	float x;// x coordinate
+	float y;// y coordinate
+	float r;//radius
+	char text;//text
+	snakenode* prev;// previous node
+	snakenode* next;//next node
 };
 
 class snake {
@@ -30,7 +39,6 @@ public:
 	~snake();//destuctor
 	snakenode* gethead();
 	snakenode* gettail();
-	void settail(snakenode* node);
 	void emplace_back();
-	void drawsnake();	
+	void drawsnake(float prevx, float prevy);
 };

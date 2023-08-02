@@ -1,4 +1,6 @@
 #include "snake.h"
+
+
 snakenode::snakenode(char c) {
 	text = c;
 	prev = nullptr;
@@ -14,8 +16,8 @@ snakenode::snakenode(char c, int _x, int _y) {
 snakenode::~snakenode() {
 
 }
-std::tuple<int, int, char, snakenode*, snakenode*> snakenode::getter() {
-	return { x,y, text,prev,next};
+snode snakenode::getter() {
+	return { x,y, r,text,prev,next};
 };
 void connectnodes(snakenode* n1, snakenode* n2) {
 	n1->next = n2;
@@ -57,18 +59,15 @@ void drawCircle(float x, float y, float radius, char type) {
 	glEnd();
 }
 
-void snake::drawsnake() {
+void snake::drawsnake(float prevx, float prevy) {
 	snakenode* current = head;
-	int prevx = 0.0f;
-	int prevy = 0.0f;
 	while (current != nullptr) {//simulation, moving upwnward
-		std::tuple<int, int, char, snakenode*, snakenode*> info = current->getter();
-		if (current == head) drawCircle(prevx, prevy, 0.05f, std::get<2>(info));
-		else {
-			drawCircle(prevx, prevy-0.1f, 0.05f,std::get<2>(info));
+		snode node = current->getter();
+		if (current != head) {
+			prevy -= 0.1f;			
 		}
-		current = std::get<4>(info);
-		prevy = prevy - 0.1f;
+		drawCircle(prevx, prevy, 0.05f, node.text);
+		current = node.next;
 	}
 };
 	
