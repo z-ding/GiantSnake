@@ -1,9 +1,8 @@
 #pragma once
-#include <glew.h>
-#include <glfw3.h>
-#include <tuple>
 #include <iostream>
 #include <memory>
+#include "./utils/draw.h"
+
 struct snode;
 class snakenode {
 private:
@@ -18,6 +17,7 @@ public:
 	snakenode(char c, int _x, int _y);//constructor with location
 	~snakenode();//destructor
 	snode getter();	
+	void nodexysetter(float _x, float _y);
 	friend void connectnodes(std::shared_ptr<snakenode> n1, std::shared_ptr<snakenode> n2);
 	
 };
@@ -29,7 +29,6 @@ struct snode {
 	std::shared_ptr<snakenode> prev;// previous node
 	std::shared_ptr<snakenode> next;//next node
 };
-
 class snake {
 private:
 	std::shared_ptr<snakenode> head;
@@ -39,6 +38,7 @@ public:
 	~snake();//destuctor
 	std::shared_ptr<snakenode> gethead();
 	std::shared_ptr<snakenode> gettail();
+	void move(float f);
 	void emplace_back();
 	void drawsnake(float prevx, float prevy);
 };

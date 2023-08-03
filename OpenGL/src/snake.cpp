@@ -1,6 +1,5 @@
 #include "snake.h"
-
-
+#include "./utils/global.h"
 snakenode::snakenode(char c) {
 	text = c;
 	prev = nullptr;
@@ -19,6 +18,10 @@ snakenode::~snakenode() {
 snode snakenode::getter() {
 	return { x,y, r,text,prev,next};
 };
+void snakenode::nodexysetter(float _x, float _y) {
+	x = _x;
+	y = _y;
+}
 void connectnodes(std::shared_ptr<snakenode> n1, std::shared_ptr<snakenode> n2) {
 	n1 -> next = n2;
 	n2->prev = n1;
@@ -37,30 +40,33 @@ std::shared_ptr<snakenode> snake::gethead() {
 std::shared_ptr<snakenode> snake::gettail() {
 	return tail;
 }
-
+void snake::move(float f) {
+	// Move the snake
+	float dx = 0, dy = 0;
+	switch (snakedir) {
+	case 0://up
+		dy = f;
+		break;
+	case 1://down
+		dy = -f;
+		break;
+	case 2://left
+		dx = -f;
+		break;
+	case 3://right
+		dx = f;
+		break;
+	}
+	float headx = head->getter().x;
+	float heady = head->getter().y;
+	head->nodexysetter(headx + dx, heady + dy);
+}
 void snake::emplace_back() {//add a node on the back
 	std::shared_ptr<snakenode> node = std::make_shared<snakenode>('g');//green body node
 	connectnodes(tail, node);
 	tail = node;
 }
-void drawCircle(float x, float y, float radius, char type) {
-	const int numSegments = 100;
-	glBegin(GL_TRIANGLE_FAN);
-	if (type =='g') {
-		glColor3f(0.0f, 1.0f, 0.0f); // Green color for greenbody
-	}
-	else {
-		glColor3f(1.0f, 0.0f, 0.0f); // Red color for snake head
-	}
-	glVertex2f(x, y);
-	for (int i = 0; i <= numSegments; i++) {
-		float theta = 2.0f * 3.1415926f * float(i) / float(numSegments);
-		float dx = radius * cosf(theta);
-		float dy = radius * sinf(theta);
-		glVertex2f(x + dx, y + dy);
-	}
-	glEnd();
-}
+
 
 void snake::drawsnake(float prevx, float prevy) {
 	std::shared_ptr<snakenode> current = head;
