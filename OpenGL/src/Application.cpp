@@ -6,11 +6,12 @@
 #define WIDTH 800
 #define HEIGHT 800
 #define GRIDS 100
+#define MOVE_INTERVAL 1 // Adjust the speed by changing this value
 
 int main(void)
 {
     GLFWwindow* window;
-
+    double lastMoveTime = glfwGetTime();
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -24,7 +25,8 @@ int main(void)
     }
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
-    //glfwSetKeyCallback(window, keyboardCallback);
+    glfwSetKeyCallback(window, keyboardCallback);
+
     if (glewInit() != GLEW_OK) {
         std::cout << "error glew init" << std::endl;
     }
@@ -41,7 +43,11 @@ int main(void)
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
         //move snake
-        player->move(0.05f);
+        double currentTime = glfwGetTime();
+        if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
+            player->move(0.05f); // Update the snake's position
+            lastMoveTime = currentTime; // Reset the timer
+        }     
         // Draw the snake
         snode playerhead = player->gethead()->getter();
         player->drawsnake(playerhead.x, playerhead.y);

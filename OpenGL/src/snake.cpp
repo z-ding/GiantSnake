@@ -43,6 +43,7 @@ std::shared_ptr<snakenode> snake::gettail() {
 void snake::move(float f) {
 	// Move the snake
 	float dx = 0, dy = 0;
+	std::cout << "moving " << snakedir << std::endl;
 	switch (snakedir) {
 	case 0://up
 		dy = f;
