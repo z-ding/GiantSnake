@@ -3,10 +3,9 @@
 #include <iostream>
 #include "snake.h"
 #include "utils/inputhandler.h"
-#define WIDTH 800
-#define HEIGHT 800
-#define GRIDS 100
-#define MOVE_INTERVAL 1 // Adjust the speed by changing this value
+#define WIDTH 600
+#define HEIGHT 600
+#define MOVE_INTERVAL 0.5 // Adjust the speed by changing this value
 
 int main(void)
 {
@@ -27,25 +26,33 @@ int main(void)
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, keyboardCallback);
 
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
     if (glewInit() != GLEW_OK) {
         std::cout << "error glew init" << std::endl;
     }
     /* Loop until the user closes the window */
-    std::unique_ptr<snake> player = std::make_unique<snake>(0.0f, 0.0f);
+    std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH/2,HEIGHT/2);
     int n = 0;
 
     while (n < 5) {
         player->emplace_back();
         n++;
     }
-    while (!glfwWindowShouldClose(window))
+
+    while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
         //move snake
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
-            player->move(0.05f); // Update the snake's position
+            player->move(); // Update the snake's position
+            player->checkalive(WIDTH, HEIGHT);
             lastMoveTime = currentTime; // Reset the timer
         }     
         // Draw the snake

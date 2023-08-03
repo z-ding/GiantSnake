@@ -15,6 +15,7 @@ private:
 public:
 	snakenode(char c);//constructor without location
 	snakenode(char c, int _x, int _y);//constructor with location
+	snakenode(char c, int _x, int _y, int _r);//constructor with location and radius
 	~snakenode();//destructor
 	snode getter();	
 	void nodexysetter(float _x, float _y);
@@ -34,11 +35,13 @@ private:
 	std::shared_ptr<snakenode> head;
 	std::shared_ptr<snakenode> tail;
 public:
+	bool alive;
 	snake(int _x, int _y);//constructor: create an empty snake with a head only
 	~snake();//destuctor
 	std::shared_ptr<snakenode> gethead();
 	std::shared_ptr<snakenode> gettail();
-	void move(float f);
+	void move();
+	void checkalive(float x, float y);
 	void emplace_back();
 	void drawsnake(float prevx, float prevy);
 };

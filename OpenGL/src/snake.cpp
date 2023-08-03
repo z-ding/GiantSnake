@@ -1,5 +1,6 @@
 #include "snake.h"
 #include "./utils/global.h"
+int default_radius = 10;
 snakenode::snakenode(char c) {
 	text = c;
 	prev = nullptr;
@@ -9,6 +10,14 @@ snakenode::snakenode(char c, int _x, int _y) {
 	text = c;
 	x = _x;
 	y = _y;
+	prev = nullptr;
+	next = nullptr;
+}
+snakenode::snakenode(char c, int _x, int _y, int _r) {
+	text = c;
+	x = _x;
+	y = _y;
+	r = _r;
 	prev = nullptr;
 	next = nullptr;
 }
@@ -28,8 +37,9 @@ void connectnodes(std::shared_ptr<snakenode> n1, std::shared_ptr<snakenode> n2) 
 };
 
 snake::snake(int _x, int _y) {	
-	head = std::make_shared<snakenode>('h', _x, _y);
+	head = std::make_shared<snakenode>('h', _x, _y, default_radius);
 	tail = head;
+	alive = true;
 }
 snake::~snake() {
 
@@ -40,28 +50,38 @@ std::shared_ptr<snakenode> snake::gethead() {
 std::shared_ptr<snakenode> snake::gettail() {
 	return tail;
 }
-void snake::move(float f) {
+void snake::move() {
 	// Move the snake
 	float dx = 0, dy = 0;
-	std::cout << "moving " << snakedir << std::endl;
 	switch (snakedir) {
 	case 0://up
-		dy = f;
+		dy = -default_radius;
 		break;
 	case 1://down
-		dy = -f;
+		dy = default_radius;
 		break;
 	case 2://left
-		dx = -f;
+		dx = -default_radius;
 		break;
 	case 3://right
-		dx = f;
+		dx = default_radius;
 		break;
 	}
 	float headx = head->getter().x;
 	float heady = head->getter().y;
 	head->nodexysetter(headx + dx, heady + dy);
+	std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
+void snake::checkalive(float x, float y) {
+	float headx = head->getter().x;
+	float heady = head->getter().y;
+	if (headx <= 0 || heady <= 0 || headx >= x || heady >= y) {
+		std::cout << "game over" << std::endl;
+		alive = false;
+		return;
+	}
+
+};
 void snake::emplace_back() {//add a node on the back
 	std::shared_ptr<snakenode> node = std::make_shared<snakenode>('g');//green body node
 	connectnodes(tail, node);
@@ -74,9 +94,9 @@ void snake::drawsnake(float prevx, float prevy) {
 	while (current != nullptr) {//simulation, moving upwnward
 		snode node = current->getter();
 		if (current != head) {
-			prevy -= 0.1f;			
+			prevy -= default_radius*2;
 		}
-		drawCircle(prevx, prevy, 0.05f, node.text);
+		drawCircle(prevx, prevy, default_radius, node.text);
 		current = node.next;
 	}
 };
