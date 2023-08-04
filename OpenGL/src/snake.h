@@ -36,12 +36,14 @@ private:
 	std::shared_ptr<snakenode> tail;
 public:
 	bool alive;
+	bool addlen;
 	snake(int _x, int _y);//constructor: create an empty snake with a head only
 	~snake();//destuctor
 	std::shared_ptr<snakenode> gethead();
 	std::shared_ptr<snakenode> gettail();
 	void move();
 	void checkalive(float x, float y);
-	void emplace_back();
-	void drawsnake(float prevx, float prevy);
+	void emplace_back(float x, float y, char t);
+	void drawsnake();
 };
+void fillgrid(int x, int y, int occupied);

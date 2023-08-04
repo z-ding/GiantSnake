@@ -36,28 +36,22 @@ int main(void)
         std::cout << "error glew init" << std::endl;
     }
     /* Loop until the user closes the window */
+    fillgrid(WIDTH, HEIGHT, 0);
+
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH/2,HEIGHT/2);
-    int n = 0;
-
-    while (n < 5) {
-        player->emplace_back();
-        n++;
-    }
-
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+
         //move snake
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
             player->move(); // Update the snake's position
-            player->checkalive(WIDTH, HEIGHT);
             lastMoveTime = currentTime; // Reset the timer
         }     
         // Draw the snake
-        snode playerhead = player->gethead()->getter();
-        player->drawsnake(playerhead.x, playerhead.y);
+        player->drawsnake();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
 
