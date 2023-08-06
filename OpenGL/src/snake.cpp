@@ -2,12 +2,12 @@
 #include "./utils/global.h"
 
 int default_radius = 10;
-std::vector<std::vector<int>> grid;
-void fillgrid(int x, int y, int occupied) {
+std::vector<std::vector<std::shared_ptr<snakenode>>> grid;
+void fillgrid(int x, int y, std::shared_ptr < snakenode> s) {
 	for (int i = 0; i <= x; i++) {
-		std::vector<int> v;
+		std::vector<std::shared_ptr<snakenode>> v;
 		for (int j = 0; j <= y; j++) {
-			v.push_back(occupied);			
+			v.push_back(s);			
 		}
 		grid.push_back(v);
 	}
@@ -52,7 +52,8 @@ snake::snake(int _x, int _y) {
 	head = std::make_shared<snakenode>('h', _x, _y, default_radius);
 	tail = head;
 	alive = true;
-	grid[_x][_y] = 1;//snake
+	grid[_x][_y] = head;//snake
+	addlen = true;
 }
 snake::~snake() {
 
@@ -65,7 +66,7 @@ std::shared_ptr<snakenode> snake::gettail() {
 }
 void snake::emplace_back(float x, float y, char t) {//add a node on the back
 	std::shared_ptr<snakenode> node = std::make_shared<snakenode>(t, x, y, default_radius);//green body node
-	grid[x][y] = 1;//snake
+	grid[x][y] = node;//snake
 	connectnodes(tail, node);
 	tail = node;
 }
@@ -98,14 +99,14 @@ void snake::move() {
 	while (cur != nullptr) {
 		prevx = cur->getter().x;
 		prevy = cur->getter().y;
-		grid[prevx][prevy] = 0;//clear prev loc
+		std::shared_ptr < snakenode> e = std::make_shared<snakenode>('e');//dummy node
+		grid[prevx][prevy] = e;//clear prev loc
 		cur->nodexysetter(nextx, nexty);
-		grid[nextx][nexty] = 1;//mark current loc as snake
+		grid[nextx][nexty] = cur;//mark current loc as snake
 		nextx = prevx;
 		nexty = prevy;
 		cur = cur->getter().next;
 	}
-	this->addlen = true;
 	if (addlen) {//add a body node at the next loc and set it as tail
 		int x = rand() % 4;//random number between 0 and 3
 		char t = 'g';
@@ -117,13 +118,49 @@ void snake::move() {
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
 void snake::checkalive(float x, float y) {
-	if (x <= 0 || y <= 0 || x >= grid[0].size() || y >= grid.size() || grid[x][y] == 1) {
+	if (x <= 0 || y <= 0 || x >= grid[0].size() || y >= grid.size() || grid[x][y] -> getter().text != 'e') {
 		std::cout << "game over" << std::endl;
 		alive = false;
 		return;
 	}
 
 };
+void snake::erase(float x, float y) {
+	std::shared_ptr<snakenode> prevnodes = grid[x][y]->getter().prev;
+	std::shared_ptr<snakenode> nextnodes = grid[x][y]->getter().next;
+	if (nextnodes == nullptr) {//shoot on tail, set prenodes as tail
+		tail = prevnodes;
+	}
+	else {
+		connectnodes(prevnodes, nextnodes);
+	}	
+}
+void snake::shooting() {
+	if (shoot) {	
+		float headx = head->getter().x;
+		float heady = head->getter().y;
+		switch (snakedir) {
+		case 0://up
+			std::cout << "shooting" << std::endl;
+			this->addlen = false;
+			for (float i = heady + 1; i < grid.size(); i += 1) {
+				if (grid[headx][i]-> getter().text != 'e') {//erase this node
+					erase(headx, i);
+					break;
+				}
+			}
+			break;
+		case 1://down
+			break;
+		case 2://left
+			break;
+		case 3://right
+			break;
+		}
+	}
+	
+	shoot = false;//shooting complete
+}
 
 
 void snake::drawsnake() {

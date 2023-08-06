@@ -45,5 +45,7 @@ public:
 	void checkalive(float x, float y);
 	void emplace_back(float x, float y, char t);
 	void drawsnake();
+	void shooting();
+	void erase(float x, float y);
 };
-void fillgrid(int x, int y, int occupied);
+void fillgrid(int x, int y, std::shared_ptr < snakenode> node);

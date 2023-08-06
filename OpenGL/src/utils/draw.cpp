@@ -14,6 +14,12 @@ void drawCircle(float x, float y, float radius, char type) {
 	else if (type == 'w') {
 		glColor3f(1.0f, 1.0f, 1.0f);
 	}
+	else if (type == 'e') {//erase: black color
+		glColor3f(0.0f, 0.0f, 0.0f);
+	}
+	else if (type == 'p') {
+		glColor3f(1.0f, 0.0f, 1.0f);
+	}
 	else {
 		glColor3f(1.0f, 0.0f, 0.0f); // Red color for snake head
 	}
