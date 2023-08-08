@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "./utils/draw.h"
+#include<unordered_set>;
 
 struct snode;
 class snakenode {
@@ -30,6 +31,7 @@ struct snode {
 	std::shared_ptr<snakenode> prev;// previous node
 	std::shared_ptr<snakenode> next;//next node
 };
+class items;
 class snake {
 private:
 	std::shared_ptr<snakenode> head;
@@ -41,7 +43,7 @@ public:
 	~snake();//destuctor
 	std::shared_ptr<snakenode> gethead();
 	std::shared_ptr<snakenode> gettail();
-	void move();
+	void move(std::shared_ptr<items> i);
 	void checkalive(float x, float y);
 	void emplace_back(float x, float y, char t);
 	void drawsnake();
@@ -49,3 +51,16 @@ public:
 	void erase(float x, float y);
 };
 void fillgrid(int x, int y, std::shared_ptr < snakenode> node);
+class items {
+private:
+	std::unordered_set< std::shared_ptr<snakenode>> itemlist;
+	int capacity;//maximum items on the screen
+public:
+	items(int _cap, std::unordered_set< std::shared_ptr<snakenode>> &_list);//default contructor, create an empty list
+	~items();
+	void generateoneitem();
+	void removeoneitem();//after collision with the snakehead
+	void drawitems();
+	std::unordered_set< std::shared_ptr<snakenode>> listgetter();
+	int sizegetter();
+};

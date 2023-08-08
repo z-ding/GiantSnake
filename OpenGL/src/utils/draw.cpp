@@ -2,16 +2,16 @@
 void drawCircle(float x, float y, float radius, char type) {
 	const int numSegments = 100;
 	glBegin(GL_TRIANGLE_FAN);
-	if (type == 'g') {
+	if (type == 'g' || type == 'G') {
 		glColor3f(0.0f, 1.0f, 0.0f); // Green color for greenbody
 	}
-	else if (type == 'b') {
+	else if (type == 'b' || type == 'B') {
 		glColor3f(0.0f, 0.0f, 1.0f);
 	}
-	else if (type == 'y') {
+	else if (type == 'y' || type == 'Y') {
 		glColor3f(1.0f, 1.0f, 0.0f);
 	}
-	else if (type == 'w') {
+	else if (type == 'w' || type == 'W') {
 		glColor3f(1.0f, 1.0f, 1.0f);
 	}
 	else if (type == 'e') {//erase: black color

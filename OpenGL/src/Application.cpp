@@ -5,7 +5,8 @@
 #include "utils/inputhandler.h"
 #define WIDTH 600
 #define HEIGHT 600
-#define MOVE_INTERVAL 0.5 // Adjust the speed by changing this value
+#define MOVE_INTERVAL 0.5
+// Adjust the speed by changing this value
 
 int main(void)
 {
@@ -39,20 +40,26 @@ int main(void)
     std::shared_ptr < snakenode> empty = std::make_shared<snakenode>('e');//dummy node
     fillgrid(WIDTH, HEIGHT, empty);
 
-    std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH/2,HEIGHT/2);
+    std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
+    std::unordered_set< std::shared_ptr<snakenode>> emptylist;
+    int cap = 3;
+    std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+        if (itemlist->sizegetter() < cap) {
+            itemlist->generateoneitem();
+        }
         player->shooting();//shoot if space key is pressed
         //move snake
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
-            player->move(); // Update the snake's position
-            
+            player->move(itemlist); // Update the snake's position
             lastMoveTime = currentTime; // Reset the timer
         }        
-        // Draw the snake
+        // Draw the items and snake
+        itemlist->drawitems();
         player->drawsnake();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
