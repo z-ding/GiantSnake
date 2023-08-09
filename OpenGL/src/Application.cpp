@@ -42,7 +42,7 @@ int main(void)
 
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
     std::unordered_set< std::shared_ptr<snakenode>> emptylist;
-    int cap = 3;
+    int cap = 10;
     std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
@@ -52,6 +52,7 @@ int main(void)
             itemlist->generateoneitem();
         }
         player->shooting();//shoot if space key is pressed
+        player->displayshootline();
         //move snake
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
@@ -61,9 +62,9 @@ int main(void)
         // Draw the items and snake
         itemlist->drawitems();
         player->drawsnake();
+        
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
-
         /* Poll for and process events */
         glfwPollEvents();
     }

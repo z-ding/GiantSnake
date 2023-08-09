@@ -103,6 +103,9 @@ void snake::move(std::shared_ptr<items> itemlist) {
 		if ((nextx - itemx) * (nextx - itemx) + (nexty - itemy) * (nexty - itemy) < 4 * default_radius * default_radius) {
 			addlen = true;
 			itemt = e->getter().text;
+			//remove the item
+			itemlist->removeoneitem(itemx, itemy);
+			break;
 		}
 	}
 	while (cur != nullptr) {
@@ -117,7 +120,7 @@ void snake::move(std::shared_ptr<items> itemlist) {
 	}
 
 	if (addlen) {//add a body node at the next loc and set it as tail
-		this->emplace_back(nextx, nexty,itemt);
+		this->emplace_back(nextx, nexty,char(int(itemt)+32));
 		addlen = false;
 	}
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
@@ -135,11 +138,27 @@ void snake::checkalive(float x, float y) {
 void snake::erase(float x, float y) {
 	std::shared_ptr<snakenode> prevnodes = grid[x][y]->getter().prev;
 	std::shared_ptr<snakenode> nextnodes = grid[x][y]->getter().next;
+	std::shared_ptr < snakenode> e = std::make_shared<snakenode>('e');//dummy node
 	if (nextnodes == nullptr) {//shoot on tail, set prenodes as tail
 		tail = prevnodes;
+		grid[x][y] = e;
 	}
 	else {
 		connectnodes(prevnodes, nextnodes);
+		//update the x,y coordinate info for next nodes
+		auto cur = nextnodes;
+		int prevx = grid[x][y]->getter().x;
+		int prevy = grid[x][y]->getter().y;
+		while (cur != nullptr) {
+			int nextx = cur->getter().x;
+			int nexty = cur->getter().y;
+			grid[nextx][nexty] = e;
+			cur->nodexysetter(prevx, prevy);
+			grid[prevx][prevy] = cur;
+			prevx = nextx;
+			prevy = nexty;
+			cur = cur->getter().next;
+		}
 	}	
 }
 void snake::shooting() {
@@ -147,28 +166,46 @@ void snake::shooting() {
 		float headx = head->getter().x;
 		float heady = head->getter().y;
 		switch (snakedir) {
-		case 0://up
-			std::cout << "shooting" << std::endl;
-			this->addlen = false;
+		case 1://down
 			for (float i = heady + 1; i < grid.size(); i += 1) {
 				if (grid[headx][i]-> getter().text != 'e') {//erase this node
 					erase(headx, i);
-					break;
 				}
+				shootline.push_back({ headx,i });
 			}
 			break;
-		case 1://down
+		case 0://up
+			for (float i = heady - 1; i >=0; i -= 1) {
+				if (grid[headx][i]->getter().text != 'e') {//erase this node
+					erase(headx, i);
+					break;
+				}
+				shootline.push_back({ headx,i });
+			}
 			break;
 		case 2://left
+			for (float i = headx - 1; i >= 0; i -= 1) {
+				if (grid[i][heady]->getter().text != 'e') {//erase this node
+					erase(i, heady);
+					break;
+				}
+				shootline.push_back({ i,heady });
+			}
 			break;
 		case 3://right
+			for (float i = headx + 1; i < grid[0].size(); i += 1) {
+				if (grid[i][heady]->getter().text != 'e') {//erase this node
+					erase(i, heady);
+					break;
+				}
+				shootline.push_back({ i,heady });
+			}
 			break;
 		}
-	}
-	
+		
+	}	
 	shoot = false;//shooting complete
 }
-
 void snake::drawsnake() {
 	std::shared_ptr<snakenode> current = head;
 	while (current != nullptr) {//simulation, moving upwnward
@@ -177,6 +214,12 @@ void snake::drawsnake() {
 		current = node.next;
 	}
 };
+void snake::displayshootline() {
+	for (int i = 0; i < shootline.size(); i++) {
+		drawCircle(shootline[i].first, shootline[i].second, 2.0, 'p');
+	}
+	shootline.clear();
+}
 
 items::items(int _cap, std::unordered_set< std::shared_ptr<snakenode>> &_list) {
 	itemlist = _list;
@@ -201,8 +244,8 @@ void items::generateoneitem() {
 	int x = -1;
 	int y = -1;
 	while (x < 0 || grid[x][y]->getter().text != 'e') {//generate a random position until it's a empty cell
-		x = rand() % (grid[0].size()-1);
-		y = rand() % (grid.size()-1);
+		x = rand() % (grid[0].size()-30)+15;
+		y = rand() % (grid.size()-30)+15;
 	}
 	std::shared_ptr<snakenode> node = std::make_shared<snakenode>(t, x, y, default_radius);
 	itemlist.emplace(node);
@@ -213,4 +256,11 @@ void items::drawitems() {
 	for (auto& e : itemlist) {
 		drawCircle(e->getter().x, e->getter().y, default_radius, e->getter().text);
 	}	
+}
+
+void items::removeoneitem(int _x, int _y) {
+	std::shared_ptr < snakenode> e = std::make_shared<snakenode>('e');//dummy node
+	std::shared_ptr<snakenode> curritem = grid[_x][_y];
+	grid[_x][_y] = e;
+	itemlist.erase(curritem);
 }

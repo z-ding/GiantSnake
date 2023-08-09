@@ -36,6 +36,7 @@ class snake {
 private:
 	std::shared_ptr<snakenode> head;
 	std::shared_ptr<snakenode> tail;
+	std::vector<std::pair<float, float>> shootline;
 public:
 	bool alive;
 	bool addlen;
@@ -49,6 +50,7 @@ public:
 	void drawsnake();
 	void shooting();
 	void erase(float x, float y);
+	void displayshootline();
 };
 void fillgrid(int x, int y, std::shared_ptr < snakenode> node);
 class items {
@@ -59,7 +61,7 @@ public:
 	items(int _cap, std::unordered_set< std::shared_ptr<snakenode>> &_list);//default contructor, create an empty list
 	~items();
 	void generateoneitem();
-	void removeoneitem();//after collision with the snakehead
+	void removeoneitem(int _x, int _y);//after collision with the snakehead
 	void drawitems();
 	std::unordered_set< std::shared_ptr<snakenode>> listgetter();
 	int sizegetter();
