@@ -178,7 +178,7 @@ void snake::shooting() {
 			for (float i = heady - 1; i >=0; i -= 1) {
 				if (grid[headx][i]->getter().text != 'e') {//erase this node
 					erase(headx, i);
-					break;
+					//break;
 				}
 				shootline.push_back({ headx,i });
 			}
@@ -187,7 +187,7 @@ void snake::shooting() {
 			for (float i = headx - 1; i >= 0; i -= 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
-					break;
+					//break;
 				}
 				shootline.push_back({ i,heady });
 			}
@@ -196,7 +196,7 @@ void snake::shooting() {
 			for (float i = headx + 1; i < grid[0].size(); i += 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
-					break;
+					//break;
 				}
 				shootline.push_back({ i,heady });
 			}
@@ -214,7 +214,7 @@ void snake::drawsnake() {
 	}
 };
 void snake::displayshootline() {
-	if (shootline.size()) std::cout << shootline.size() << std::endl;
+	//if (shootline.size()) std::cout << shootline.size() << std::endl;
 	for (int i = 0; i < shootline.size(); i++) {
 		drawCircle(shootline[i].first, shootline[i].second, 1.0, 'p');
 	}
