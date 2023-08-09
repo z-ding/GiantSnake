@@ -202,9 +202,8 @@ void snake::shooting() {
 			}
 			break;
 		}
-		
+		shoot = false;
 	}	
-	shoot = false;//shooting complete
 }
 void snake::drawsnake() {
 	std::shared_ptr<snakenode> current = head;
@@ -215,10 +214,12 @@ void snake::drawsnake() {
 	}
 };
 void snake::displayshootline() {
+	if (shootline.size()) std::cout << shootline.size() << std::endl;
 	for (int i = 0; i < shootline.size(); i++) {
-		drawCircle(shootline[i].first, shootline[i].second, 2.0, 'p');
+		drawCircle(shootline[i].first, shootline[i].second, 1.0, 'p');
 	}
 	shootline.clear();
+	
 }
 
 items::items(int _cap, std::unordered_set< std::shared_ptr<snakenode>> &_list) {

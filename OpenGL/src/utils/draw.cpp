@@ -6,10 +6,10 @@ void drawCircle(float x, float y, float radius, char type) {
 		glColor3f(0.0f, 1.0f, 0.0f); // Green color for greenbody
 	}
 	else if (type == 'b' || type == 'B') {
-		glColor3f(0.0f, 0.0f, 1.0f);
+		glColor3f(0.3, 0.5, 0.902);
 	}
 	else if (type == 'y' || type == 'Y') {
-		glColor3f(1.0f, 1.0f, 0.0f);
+		glColor3f(1.0f, 0.8f, 0.0f);
 	}
 	else if (type == 'w' || type == 'W') {
 		glColor3f(1.0f, 1.0f, 1.0f);
@@ -18,7 +18,7 @@ void drawCircle(float x, float y, float radius, char type) {
 		glColor3f(0.0f, 0.0f, 0.0f);
 	}
 	else if (type == 'p') {
-		glColor3f(1.0f, 0.0f, 1.0f);
+		glColor3f(1.0f, 0.0f, 0.8f);
 	}
 	else {
 		glColor3f(1.0f, 0.0f, 0.0f); // Red color for snake head
