@@ -7,16 +7,16 @@ void keyboardCallback(GLFWwindow* window, int key, int scancode, int action, int
     if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         switch (key) {
         case GLFW_KEY_UP:
-            snakedir = 0;//up
+            if (snakedir != 1) snakedir = 0;//up          
             break;
         case GLFW_KEY_DOWN:
-            snakedir = 1;//down
+            if (snakedir != 0) snakedir = 1;//down
             break;
         case GLFW_KEY_LEFT:
-            snakedir = 2;//left
+            if (snakedir != 3) snakedir = 2;//left
             break;
         case GLFW_KEY_RIGHT:
-            snakedir = 3;//right
+            if (snakedir != 2) snakedir = 3;//right
             break;
         case GLFW_KEY_SPACE:
             shoot = true;

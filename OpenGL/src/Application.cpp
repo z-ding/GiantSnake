@@ -51,7 +51,7 @@ int main(void)
         if (itemlist->sizegetter() < cap) {
             itemlist->generateoneitem();
         }
-        player->shooting();//shoot if space key is pressed
+        bool showshootline = player->shooting();//shoot if space key is pressed
         player->displayshootline();
         //move snake
         double currentTime = glfwGetTime();
@@ -62,7 +62,8 @@ int main(void)
         // Draw the items and snake
         itemlist->drawitems();
         player->drawsnake();
-        
+        currentTime = glfwGetTime(); 
+                         
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
         /* Poll for and process events */

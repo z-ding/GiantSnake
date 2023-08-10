@@ -48,7 +48,7 @@ public:
 	void checkalive(float x, float y);
 	void emplace_back(float x, float y, char t);
 	void drawsnake();
-	void shooting();
+	bool shooting();
 	void erase(float x, float y);
 	void displayshootline();
 };

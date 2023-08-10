@@ -71,6 +71,7 @@ void snake::emplace_back(float x, float y, char t) {//add a node on the back
 }
 
 void snake::move(std::shared_ptr<items> itemlist) {
+	shootline.clear();
 	// Move the snake
 	float dx = 0, dy = 0;
 	float speed = default_radius*2;
@@ -161,8 +162,8 @@ void snake::erase(float x, float y) {
 		}
 	}	
 }
-void snake::shooting() {
-	if (shoot) {	
+bool snake::shooting() {
+	if (shoot) {
 		float headx = head->getter().x;
 		float heady = head->getter().y;
 		switch (snakedir) {
@@ -203,7 +204,9 @@ void snake::shooting() {
 			break;
 		}
 		shoot = false;
+		return true;
 	}	
+	return false;
 }
 void snake::drawsnake() {
 	std::shared_ptr<snakenode> current = head;
@@ -218,8 +221,6 @@ void snake::displayshootline() {
 	for (int i = 0; i < shootline.size(); i++) {
 		drawCircle(shootline[i].first, shootline[i].second, 1.0, 'p');
 	}
-	shootline.clear();
-	
 }
 
 items::items(int _cap, std::unordered_set< std::shared_ptr<snakenode>> &_list) {
