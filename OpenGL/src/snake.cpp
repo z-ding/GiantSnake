@@ -2,10 +2,10 @@
 #include "./utils/global.h"
 
 int default_radius = 10;
-std::vector<std::vector<std::shared_ptr<snakenode>>> grid;
-void fillgrid(int x, int y, std::shared_ptr < snakenode> s) {
+std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
+void fillgrid(int x, int y, std::shared_ptr < allpurposenode> s) {
 	for (int i = 0; i <= x; i++) {
-		std::vector<std::shared_ptr<snakenode>> v;
+		std::vector<std::shared_ptr<allpurposenode>> v;
 		for (int j = 0; j <= y; j++) {
 			v.push_back(s);			
 		}
@@ -16,7 +16,7 @@ void fillgrid(int x, int y, std::shared_ptr < snakenode> s) {
 
 
 snake::snake(int _x, int _y) {	
-	head = std::make_shared<snakenode>('h', _x, _y, default_radius);
+	head = std::make_shared<allpurposenode>('h', _x, _y, default_radius);
 	tail = head;
 	alive = true;
 	grid[_x][_y] = head;//snake
@@ -24,14 +24,14 @@ snake::snake(int _x, int _y) {
 snake::~snake() {
 
 }
-std::shared_ptr<snakenode> snake::gethead() {
+std::shared_ptr<allpurposenode> snake::gethead() {
 	return head;
 }
-std::shared_ptr<snakenode> snake::gettail() {
+std::shared_ptr<allpurposenode> snake::gettail() {
 	return tail;
 }
 void snake::emplace_back(float x, float y, char t) {//add a node on the back
-	std::shared_ptr<snakenode> node = std::make_shared<snakenode>(t, x, y, default_radius);//green body node
+	std::shared_ptr<allpurposenode> node = std::make_shared<allpurposenode>(t, x, y, default_radius);//green body node
 	grid[x][y] = node;//snake
 	connectnodes(tail, node);
 	tail = node;
@@ -56,8 +56,8 @@ void snake::move(std::shared_ptr<items> itemlist) {
 		dx = speed;
 		break;
 	}
-	std::shared_ptr<snakenode> cur = head;
-	std::shared_ptr < snakenode> e = std::make_shared<snakenode>('e');//dummy nodem
+	std::shared_ptr<allpurposenode> cur = head;
+	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy nodem
 	float prevx = cur->getter().x;
 	float prevy = cur->getter().y;
 	float nextx = prevx + dx;
@@ -104,9 +104,9 @@ void snake::checkalive(float x, float y) {
 
 };
 void snake::erase(float x, float y) {
-	std::shared_ptr<snakenode> prevnodes = grid[x][y]->getter().prev;
-	std::shared_ptr<snakenode> nextnodes = grid[x][y]->getter().next;
-	std::shared_ptr < snakenode> e = std::make_shared<snakenode>('e');//dummy node
+	std::shared_ptr<allpurposenode> prevnodes = grid[x][y]->getter().prev;
+	std::shared_ptr<allpurposenode> nextnodes = grid[x][y]->getter().next;
+	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy node
 	if (nextnodes == nullptr) {//shoot on tail, set prenodes as tail
 		tail = prevnodes;
 		grid[x][y] = e;
@@ -176,7 +176,7 @@ bool snake::shooting() {
 	return false;
 }
 void snake::drawsnake() {
-	std::shared_ptr<snakenode> current = head;
+	std::shared_ptr<allpurposenode> current = head;
 	while (current != nullptr) {//simulation, moving upwnward
 		snode node = current->getter();
 		drawCircle(node.x, node.y, default_radius, node.text);

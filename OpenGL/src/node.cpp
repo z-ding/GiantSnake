@@ -1,17 +1,17 @@
 #include "node.h"
-snakenode::snakenode(char c) {
+allpurposenode::allpurposenode(char c) {
 	text = c;
 	prev = nullptr;
 	next = nullptr;
 }
-snakenode::snakenode(char c, int _x, int _y) {
+allpurposenode::allpurposenode(char c, int _x, int _y) {
 	text = c;
 	x = _x;
 	y = _y;
 	prev = nullptr;
 	next = nullptr;
 }
-snakenode::snakenode(char c, int _x, int _y, int _r) {
+allpurposenode::allpurposenode(char c, int _x, int _y, int _r) {
 	text = c;
 	x = _x;
 	y = _y;
@@ -19,17 +19,17 @@ snakenode::snakenode(char c, int _x, int _y, int _r) {
 	prev = nullptr;
 	next = nullptr;
 }
-snakenode::~snakenode() {
+allpurposenode::~allpurposenode() {
 
 }
-snode snakenode::getter() {
+snode allpurposenode::getter() {
 	return { x,y, r,text,prev,next };
 };
-void snakenode::nodexysetter(float _x, float _y) {
+void allpurposenode::nodexysetter(float _x, float _y) {
 	x = _x;
 	y = _y;
 }
-void connectnodes(std::shared_ptr<snakenode> n1, std::shared_ptr<snakenode> n2) {
+void connectnodes(std::shared_ptr<allpurposenode> n1, std::shared_ptr<allpurposenode> n2) {
 	n1->next = n2;
 	n2->prev = n1;
 };

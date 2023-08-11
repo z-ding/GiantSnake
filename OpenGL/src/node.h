@@ -6,22 +6,22 @@
 #include<unordered_set>
 
 struct snode;
-class snakenode {
+class allpurposenode {
 private:
 	float x;// x coordinate
 	float y;// y coordinate
 	float r;//radius
 	char text;//text
-	std::shared_ptr<snakenode> prev;// previous node
-	std::shared_ptr<snakenode> next;//next node
+	std::shared_ptr<allpurposenode> prev;// previous node
+	std::shared_ptr<allpurposenode> next;//next node
 public:
-	snakenode(char c);//constructor without location
-	snakenode(char c, int _x, int _y);//constructor with location
-	snakenode(char c, int _x, int _y, int _r);//constructor with location and radius
-	~snakenode();//destructor
+	allpurposenode(char c);//constructor without location
+	allpurposenode(char c, int _x, int _y);//constructor with location
+	allpurposenode(char c, int _x, int _y, int _r);//constructor with location and radius
+	~allpurposenode();//destructor
 	snode getter();
 	void nodexysetter(float _x, float _y);
-	friend void connectnodes(std::shared_ptr<snakenode> n1, std::shared_ptr<snakenode> n2);
+	friend void connectnodes(std::shared_ptr<allpurposenode> n1, std::shared_ptr<allpurposenode> n2);
 
 };
 struct snode {
@@ -29,6 +29,6 @@ struct snode {
 	float y;// y coordinate
 	float r;//radius
 	char text;//text
-	std::shared_ptr<snakenode> prev;// previous node
-	std::shared_ptr<snakenode> next;//next node
+	std::shared_ptr<allpurposenode> prev;// previous node
+	std::shared_ptr<allpurposenode> next;//next node
 };

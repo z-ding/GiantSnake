@@ -39,13 +39,14 @@ int main(void)
         std::cout << "error glew init" << std::endl;
     }
     /* Loop until the user closes the window */
-    std::shared_ptr < snakenode> empty = std::make_shared<snakenode>('e');//dummy node
+    std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
     fillgrid(WIDTH, HEIGHT, empty);
 
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
-    std::unordered_set< std::shared_ptr<snakenode>> emptylist;
+    std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
     std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
+
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
