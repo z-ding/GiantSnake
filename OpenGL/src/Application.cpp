@@ -1,7 +1,9 @@
 #include <glew.h>
 #include <glfw3.h>
 #include <iostream>
+#include "node.h"
 #include "snake.h"
+#include "items.h"
 #include "utils/inputhandler.h"
 #define WIDTH 600
 #define HEIGHT 600
