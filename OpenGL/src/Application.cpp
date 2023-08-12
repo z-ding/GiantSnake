@@ -62,6 +62,7 @@ int main(void)
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
             player->move(itemlist); // Update the snake's position
+            testingenemy->move(player->gethead());
             testingenemy->rotate();//move and rotate the enemy
             lastMoveTime = currentTime; // Reset the timer
         }        

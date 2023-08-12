@@ -56,3 +56,17 @@ void enemies::rotate() {
 		e->nodexysetter(newxy.first, newxy.second);
 	}
 }
+void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
+	auto target = findMiddleOfList(snakehead);
+	float middlex = target->getter().x;
+	float middley = target->getter().y;
+	float speed = 0.05;
+	auto newcenter = interpolate(center_x, center_y, middlex, middley, speed);
+	float dx = newcenter.first - center_x;
+	float dy = newcenter.second - center_y;
+	center_x = newcenter.first;
+	center_y = newcenter.second;
+	for (auto& e : location) {
+		e->nodexysetter(e->getter().x + dx, e->getter().y + dy);
+	}
+}

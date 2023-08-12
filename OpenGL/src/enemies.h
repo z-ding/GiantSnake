@@ -11,7 +11,7 @@ private:
 public:
 	enemies(float centerx, float centery, int length);//constructor: create an empty snake with a head only
 	~enemies();//destuctor
-	void move();
+	void move(std::shared_ptr<allpurposenode> snakehead);
 	void rotate();
 	void drawenemy();
 	void erase(float x, float y);
