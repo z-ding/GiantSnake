@@ -4,6 +4,7 @@
 #include "node.h"
 #include "snake.h"
 #include "items.h"
+#include "enemies.h"
 #include "utils/inputhandler.h"
 #define WIDTH 600
 #define HEIGHT 600
@@ -46,6 +47,7 @@ int main(void)
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
     std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
+    std::shared_ptr<enemies> testingenemy = std::make_shared<enemies>(30, 30, 15);
 
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
@@ -60,13 +62,14 @@ int main(void)
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
             player->move(itemlist); // Update the snake's position
+            testingenemy->rotate();//move and rotate the enemy
             lastMoveTime = currentTime; // Reset the timer
         }        
         // Draw the items and snake
         itemlist->drawitems();
         player->drawsnake();
-        currentTime = glfwGetTime(); 
-                         
+        testingenemy->drawenemy();
+        currentTime = glfwGetTime();                         
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
         /* Poll for and process events */
