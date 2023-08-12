@@ -13,8 +13,6 @@ void fillgrid(int x, int y, std::shared_ptr < allpurposenode> s) {
 	}
 }
 
-
-
 snake::snake(int _x, int _y) {	
 	head = std::make_shared<allpurposenode>('h', _x, _y, default_radius);
 	tail = head;

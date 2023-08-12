@@ -47,8 +47,11 @@ int main(void)
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
     std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
-    std::shared_ptr<enemies> testingenemy = std::make_shared<enemies>(30, 30, 15);
-
+    std::vector<std::shared_ptr<enemies>> Enemies;
+    Enemies.emplace_back(std::make_shared<enemies>(30, 30, 15));
+    Enemies.emplace_back(std::make_shared<enemies>(570, 570, 15));
+    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 15));
+    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 15));
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
@@ -62,14 +65,21 @@ int main(void)
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
             player->move(itemlist); // Update the snake's position
-            testingenemy->move(player->gethead());
-            testingenemy->rotate();//move and rotate the enemy
+            for (auto& e : Enemies) {
+                e->move(player->gethead());
+                e->rotate();//move and rotate the enemy
+                if (e->kill(player->gethead())) {
+                    player->alive = false;
+                    std::cout << "gameover" << std::endl;
+                    return 0;
+                }
+            }
             lastMoveTime = currentTime; // Reset the timer
         }        
         // Draw the items and snake
         itemlist->drawitems();
         player->drawsnake();
-        testingenemy->drawenemy();
+        for (auto &e:Enemies) e->drawenemy();       
         currentTime = glfwGetTime();                         
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

@@ -14,5 +14,6 @@ public:
 	void move(std::shared_ptr<allpurposenode> snakehead);
 	void rotate();
 	void drawenemy();
+	bool kill(std::shared_ptr<allpurposenode> snakehead);
 	void erase(float x, float y);
 };

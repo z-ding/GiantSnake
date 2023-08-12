@@ -70,3 +70,19 @@ void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
 		e->nodexysetter(e->getter().x + dx, e->getter().y + dy);
 	}
 }
+bool enemies :: kill(std::shared_ptr<allpurposenode> snakehead) {
+	for (auto& e : location) {
+		float ex = e->getter().x;
+		float ey = e->getter().y;
+		auto cur = snakehead;
+		while (cur != nullptr) {
+			float snakex = cur->getter().x;
+			float snakey = cur->getter().y;
+			if ((ex - snakex) * (ex - snakex) + (ey - snakey) * (ey - snakey) < (defaultenemyradius + cur->getter().r) * (defaultenemyradius + cur->getter().r)) {
+				return true;
+			}
+			cur = cur->getter().next;
+		}
+	}
+	return false;
+}
