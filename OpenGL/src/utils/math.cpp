@@ -28,3 +28,23 @@ std::shared_ptr<allpurposenode> findMiddleOfList(std::shared_ptr<allpurposenode>
     }
     return slow;
 };
+std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposenode> head) {
+    auto cur = head;
+    int len = 0;
+    while (cur != nullptr) {
+        len++;
+        cur = cur->getter().next;
+    }
+    int random = rand() % len;
+    int k = 0;
+    cur = head;
+    while (k <= random) {
+        if (k == random) {
+            std::cout << "target" << cur << std::endl;
+            return cur;
+        }
+        k++;
+        cur = cur->getter().next;
+    }
+    return cur;
+};

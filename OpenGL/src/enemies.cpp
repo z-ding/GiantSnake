@@ -1,8 +1,10 @@
 #include "enemies.h"
+#include "./utils/global.h"
 float defaultenemyradius = 1;
-enemies::enemies(float centerx, float centery,  int length) {
+enemies::enemies(float centerx, float centery,  int length, int _type) {
 	center_x = centerx;
 	center_y = centery;
+	type = _type;
 	auto up = std::make_shared<allpurposenode>('x', centerx, centery + 1, defaultenemyradius);
 	auto down = std::make_shared<allpurposenode>('x', centerx, centery - 1, defaultenemyradius);
 	auto left = std::make_shared<allpurposenode>('x', centerx-1, centery, defaultenemyradius);
@@ -57,10 +59,23 @@ void enemies::rotate() {
 	}
 }
 void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
-	auto target = findMiddleOfList(snakehead);
-	float middlex = target->getter().x;
-	float middley = target->getter().y;
-	float speed = 0.05;
+	float middlex;
+	float middley;
+	if (type == 0) {//chase a random body node
+		auto target = findRandomNodeOfList(snakehead);
+		middlex = target->getter().x;
+		middley = target->getter().y;
+	}
+	else if (type == 1) {//chase the middle of the snake body
+		auto target = findMiddleOfList(snakehead);
+		middlex = target->getter().x;
+		middley = target->getter().y;
+	}
+	else {//move randomly
+		middlex = rand() % grid[0].size();
+		middley = rand() % grid.size();
+	}
+	float speed = 0.15;
 	auto newcenter = interpolate(center_x, center_y, middlex, middley, speed);
 	float dx = newcenter.first - center_x;
 	float dy = newcenter.second - center_y;

@@ -5,11 +5,12 @@
 class enemies {
 private:
 	float center_x;
-	float center_y;
+	float center_y;	
 	std::unordered_set< std::shared_ptr<allpurposenode>> location;
 	int edges;
 public:
-	enemies(float centerx, float centery, int length);//constructor: create an empty snake with a head only
+	int type;
+	enemies(float centerx, float centery, int length, int _type);//constructor: create an empty snake with a head only
 	~enemies();//destuctor
 	void move(std::shared_ptr<allpurposenode> snakehead);
 	void rotate();

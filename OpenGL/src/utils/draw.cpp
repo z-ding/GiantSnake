@@ -20,7 +20,7 @@ void drawCircle(float x, float y, float radius, char type) {
 	else if (type == 'p') {
 		glColor3f(1.0f, 0.0f, 0.8f);
 	}
-	else if (type == 'x') {
+	else if (type == 'x' || type == 'X') {
 		glColor3f(0.8f, 0.6f, 0.0f);
 	}
 	else {
