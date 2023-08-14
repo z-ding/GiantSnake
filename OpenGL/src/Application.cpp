@@ -60,7 +60,7 @@ int main(void)
         if (itemlist->sizegetter() < cap) {
             itemlist->generateoneitem();
         }
-        bool showshootline = player->shooting();//shoot if space key is pressed
+        bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
         player->displayshootline();
         //move snake
         double currentTime = glfwGetTime();

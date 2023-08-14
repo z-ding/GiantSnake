@@ -44,8 +44,11 @@ enemies::enemies(float centerx, float centery,  int length, int _type) {
 	}
 }
 enemies::~enemies() {
-
+	//std::cout << "enemy destroyed" << std::endl;
 }
+std::pair<float, float> enemies::getcenter() {
+	return { center_x,center_y };
+};
 void enemies::drawenemy() {
 	for (auto& e : location) {
 		drawCircle(e->getter().x, e->getter().y, defaultenemyradius, e->getter().text);
@@ -75,6 +78,13 @@ void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
 		middlex = rand() % grid[0].size();
 		middley = rand() % grid.size();
 	}
+	//shoot a bullet
+	auto newbullet = std::make_shared<bullet>();
+	newbullet->locationx = center_x;
+	newbullet->locationy = center_y;
+	newbullet->targetx = middlex;
+	newbullet->targety = middley;
+	bullets.emplace_back(newbullet);
 	float speed = 0.15;
 	auto newcenter = interpolate(center_x, center_y, middlex, middley, speed);
 	float dx = newcenter.first - center_x;
@@ -101,3 +111,5 @@ bool enemies :: kill(std::shared_ptr<allpurposenode> snakehead) {
 	}
 	return false;
 }
+
+

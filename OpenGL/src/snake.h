@@ -1,6 +1,7 @@
 #pragma once
 #include "node.h"
 #include "items.h"
+#include "enemies.h"
 
 
 class snake {
@@ -19,7 +20,7 @@ public:
 	void checkalive(float x, float y);
 	void emplace_back(float x, float y, char t);
 	void drawsnake();
-	bool shooting();
+	bool shooting(std::vector<std::shared_ptr<enemies>> &Enemies);
 	void erase(float x, float y);
 	void displayshootline();
 };

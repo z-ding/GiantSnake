@@ -17,6 +17,20 @@ std::pair<float, float> interpolate(float startx, float starty, float endx, floa
     resulty = starty + t * (endy - starty);
     return { resultx,resulty };
 }
+std::pair<float,float> simulateBulletTrajectory(float startx, float starty, float endx, float endy, double initialVelocity, double timeInterval) {
+    double angle = atan2(endy - starty, endx - startx);
+    //for (double t = 0; t <= 1.0; t += timeInterval) {
+        double x = startx + initialVelocity * cos(angle) * timeInterval;
+        double y = starty + initialVelocity * sin(angle) * timeInterval - 0.5 * 9.81 * pow(timeInterval, 2);
+        return { x, y };
+
+        // Print the current position of the bullet
+        //std::cout << "Time: " << t << " seconds | Position: (" << currentPosition.x << ", " << currentPosition.y << ")" << std::endl;
+
+        // Simulate the passage of time
+        //std::this_thread::sleep_for(std::chrono::milliseconds(static_cast<int>(timeInterval * 1000)));
+    //}
+};
 std::shared_ptr<allpurposenode> findMiddleOfList(std::shared_ptr<allpurposenode> head) {
     auto fast = head;
     auto slow = head;
@@ -40,7 +54,6 @@ std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposen
     cur = head;
     while (k <= random) {
         if (k == random) {
-            std::cout << "target" << cur << std::endl;
             return cur;
         }
         k++;

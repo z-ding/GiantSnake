@@ -127,12 +127,18 @@ void snake::erase(float x, float y) {
 		}
 	}	
 }
-bool snake::shooting() {
+bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 	if (shoot) {
 		float headx = head->getter().x;
 		float heady = head->getter().y;
 		switch (snakedir) {
 		case 1://down
+			for (int i = Enemies.size() - 1; i >= 0; i--) {
+				if (abs(Enemies[i]->getcenter().first - headx) < 10 && Enemies[i]->getcenter().second > heady) {
+					Enemies.erase(Enemies.begin() + i);
+				}
+			}
+
 			for (float i = heady + 1; i < grid.size(); i += 1) {
 				if (grid[headx][i]-> getter().text != 'e') {//erase this node
 					erase(headx, i);
@@ -141,6 +147,11 @@ bool snake::shooting() {
 			}
 			break;
 		case 0://up
+			for (int i=Enemies.size()-1; i>=0;i--) {
+				if (abs(Enemies[i]->getcenter().first - headx) < 10 && Enemies[i]->getcenter().second < heady) {
+					Enemies.erase(Enemies.begin()+i);
+				}
+			}
 			for (float i = heady - 1; i >=0; i -= 1) {
 				if (grid[headx][i]->getter().text != 'e') {//erase this node
 					erase(headx, i);
@@ -150,6 +161,11 @@ bool snake::shooting() {
 			}
 			break;
 		case 2://left
+			for (int i = Enemies.size() - 1; i >= 0; i--) {
+				if (abs(Enemies[i]->getcenter().second - heady) < 10 && Enemies[i]->getcenter().first < headx) {
+					Enemies.erase(Enemies.begin() + i);
+				}
+			}
 			for (float i = headx - 1; i >= 0; i -= 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
@@ -159,6 +175,11 @@ bool snake::shooting() {
 			}
 			break;
 		case 3://right
+			for (int i = Enemies.size() - 1; i >= 0; i--) {
+				if (abs(Enemies[i]->getcenter().second - heady) < 10 && Enemies[i]->getcenter().first > headx) {
+					Enemies.erase(Enemies.begin() + i);
+				}
+			}
 			for (float i = headx + 1; i < grid[0].size(); i += 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
@@ -168,6 +189,7 @@ bool snake::shooting() {
 			}
 			break;
 		}
+
 		shoot = false;
 		return true;
 	}	
