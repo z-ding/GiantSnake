@@ -24,5 +24,6 @@ public:
 	void rotate();
 	void drawenemy();
 	bool kill(std::shared_ptr<allpurposenode> snakehead);
-	void shoot(std::shared_ptr<allpurposenode> snakehead);
+	void movebullet();
+	void drawbullets();
 };

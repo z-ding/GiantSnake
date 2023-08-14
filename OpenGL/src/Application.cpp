@@ -74,13 +74,17 @@ int main(void)
                     std::cout << "gameover" << std::endl;
                     return 0;
                 }
+                e->movebullet();
             }
             lastMoveTime = currentTime; // Reset the timer
         }        
         // Draw the items and snake
         itemlist->drawitems();
         player->drawsnake();
-        for (auto &e:Enemies) e->drawenemy();       
+        for (auto& e : Enemies) {
+            e->drawenemy();
+            e->drawbullets();
+        }
         currentTime = glfwGetTime();                         
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

@@ -85,6 +85,7 @@ void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
 	newbullet->targetx = middlex;
 	newbullet->targety = middley;
 	bullets.emplace_back(newbullet);
+	//new bullet saved in the bullet vector
 	float speed = 0.15;
 	auto newcenter = interpolate(center_x, center_y, middlex, middley, speed);
 	float dx = newcenter.first - center_x;
@@ -111,5 +112,22 @@ bool enemies :: kill(std::shared_ptr<allpurposenode> snakehead) {
 	}
 	return false;
 }
+void enemies::movebullet() {
+	for (int i = bullets.size() - 1; i >= 0; i--) {
+		auto nextloc = simulateBulletTrajectory(bullets[i]->locationx, bullets[i]->locationy, bullets[i]->targetx, bullets[i]->targety, 10, 0.5);
+		if (nextloc.first < 0 || nextloc.second < 0 || nextloc.first >= grid[0].size() || nextloc.second >= grid.size()) {
+			bullets.erase(bullets.begin() + i);
+		}
+		else {
+			bullets[i]->locationx = nextloc.first;
+			bullets[i]->locationy = nextloc.second;
+		}
+	}
+}
+void enemies::drawbullets() {
+	for (int i = bullets.size() - 1; i >= 0; i--) {
+		drawCircle(bullets[i]->locationx, bullets[i]->locationy, defaultenemyradius, 'x');
+	}
+};
 
 
