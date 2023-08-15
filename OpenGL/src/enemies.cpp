@@ -1,6 +1,15 @@
 #include "enemies.h"
 #include "./utils/global.h"
 float defaultenemyradius = 1;
+bullet::bullet(float x1, float y1, float x2, float y2) {
+	locationx = x1;
+	locationy = y1;
+	targetx = x2;
+	targety = y2;
+}
+bullet::~bullet() {
+
+}
 enemies::enemies(float centerx, float centery,  int length, int _type) {
 	center_x = centerx;
 	center_y = centery;
@@ -44,7 +53,7 @@ enemies::enemies(float centerx, float centery,  int length, int _type) {
 	}
 }
 enemies::~enemies() {
-	//std::cout << "enemy destroyed" << std::endl;
+	// std::cout << "enemy destroyed" << std::endl;
 }
 std::pair<float, float> enemies::getcenter() {
 	return { center_x,center_y };
@@ -79,14 +88,10 @@ void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
 		middley = rand() % grid.size();
 	}
 	//shoot a bullet
-	auto newbullet = std::make_shared<bullet>();
-	newbullet->locationx = center_x;
-	newbullet->locationy = center_y;
-	newbullet->targetx = middlex;
-	newbullet->targety = middley;
+	auto newbullet = std::make_shared<bullet>(center_x, center_y,middlex,middley);
 	bullets.emplace_back(newbullet);
 	//new bullet saved in the bullet vector
-	float speed = 0.15;
+	float speed = 0.1;
 	auto newcenter = interpolate(center_x, center_y, middlex, middley, speed);
 	float dx = newcenter.first - center_x;
 	float dy = newcenter.second - center_y;

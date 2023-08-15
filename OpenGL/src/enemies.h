@@ -1,12 +1,14 @@
 #pragma once
 #include "node.h"
 #include "./utils/math.h"
-struct bullet {
+ class bullet {
+ public:
 	float locationx;
 	float locationy;
 	float targetx;
 	float targety;
-
+	 bullet(float x1, float y1, float x2, float y2);
+	 ~bullet();
 };
 class enemies {
 private:
