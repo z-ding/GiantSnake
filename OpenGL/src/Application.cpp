@@ -71,7 +71,7 @@ int main(void)
                 e->rotate();//move and rotate the enemy
                 if (e->kill(player->gethead())) {
                     player->alive = false;
-                    std::cout << "gameover" << std::endl;
+                    std::cout << "killed by enemy gameover" << std::endl;
                     return 0;
                 }
                 e->movebullet();
@@ -84,6 +84,7 @@ int main(void)
         for (auto& e : Enemies) {
             e->drawenemy();
             e->drawbullets();
+
         }
         currentTime = glfwGetTime();                         
         /* Swap front and back buffers */

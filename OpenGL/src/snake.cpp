@@ -95,7 +95,7 @@ void snake::checkalive(float x, float y) {
 	int ascii = int(grid[x][y]->getter().text);
 	if (ascii >= 65 && ascii <= 90) return;//collision with an item
 	if (x <= 0 || y <= 0 || x >= grid[0].size() || y >= grid.size() || grid[x][y] -> getter().text != 'e') {
-		std::cout << "game over" << std::endl;
+		std::cout << "snake game over" << std::endl;
 		alive = false;
 		return;
 	}

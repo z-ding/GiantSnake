@@ -116,6 +116,11 @@ void enemies::movebullet() {
 	for (int i = bullets.size() - 1; i >= 0; i--) {
 		auto nextloc = simulateBulletTrajectory(bullets[i]->locationx, bullets[i]->locationy, bullets[i]->targetx, bullets[i]->targety, 10, 0.5);
 		if (nextloc.first < 0 || nextloc.second < 0 || nextloc.first >= grid[0].size() || nextloc.second >= grid.size()) {
+			std::cout << "bullet out of bound" << std::endl;
+			bullets.erase(bullets.begin() + i);
+		}
+		else if (abs(nextloc.first - bullets[i]->targetx) < 0.1 && abs(nextloc.second - bullets[i]->targety) < 0.1) {
+			std::cout << "bullet reached target" << std::endl;
 			bullets.erase(bullets.begin() + i);
 		}
 		else {
