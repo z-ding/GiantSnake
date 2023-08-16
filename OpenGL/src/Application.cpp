@@ -6,13 +6,16 @@
 #include "items.h"
 #include "enemies.h"
 #include "utils/inputhandler.h"
+#include <WinSock2.h>
 #define WIDTH 600
 #define HEIGHT 600
 #define MOVE_INTERVAL 0.5
 // Adjust the speed by changing this value
-
+const int PORT = 12345;
 int main(void)
 {
+
+
     GLFWwindow* window;
     double lastMoveTime = glfwGetTime();
     /* Initialize the library */

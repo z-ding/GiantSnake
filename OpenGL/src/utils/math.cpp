@@ -61,3 +61,40 @@ std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposen
     }
     return cur;
 };
+
+const double PI = 3.141592653589793238463;
+std::vector<std::pair<float, float>> fibonaccispiral() {
+    const int screenWidth = 800;
+    const int screenHeight = 800;
+
+    // Center of the screen
+    const double centerX = screenWidth / 2.0;
+    const double centerY = screenHeight / 2.0;
+
+    double radius = 1.0;
+    double angle = 0.0;
+    double goldenRatio = (1.0 + std::sqrt(5.0)) / 2.0;
+
+    // Number of spiral arms
+    int arms = 20;
+
+    // Number of points in each arm
+    int pointsPerArm = 500;
+
+    // Angle increment for each point
+    double angleIncrement = 2.0 * PI * (1.0 - 1.0 / goldenRatio);
+
+    // Draw the Fibonacci spiral
+    for (int arm = 0; arm < arms; ++arm) {
+        for (int i = 0; i < pointsPerArm; ++i) {
+            double x = centerX + radius * std::cos(angle);
+            double y = centerY - radius * std::sin(angle); // Negative sin to invert the y-axis
+
+            // Draw point (you might use a graphics library like SFML or OpenGL for this)
+            std::cout << "Draw point at (" << x << ", " << y << ")" << std::endl;
+
+            angle += angleIncrement;
+            radius *= goldenRatio;
+        }
+    }
+}
