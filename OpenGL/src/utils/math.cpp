@@ -64,16 +64,18 @@ std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposen
 };
 
 // pass in scaling factor to adjust the distance between each layer
-std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, int centerx, int centery, double scalingFactor) {
+std::vector < std::pair<float, float>> fibonaccispiral(int numPointsPerLayer, int numLayers, int centerx, int centery, double scalingFactor) {
     double goldenRatio = 1.61803398875;
     std::vector < std::pair<float, float>> res;
     // Draw the Fibonacci spiral
-    for (int i = 0; i < numPoints; ++i) {
-        double angle = i * (360.0 / goldenRatio);
-        double radius = scalingFactor*std::sqrt(i);
-        float x = centerx+ radius * std::cos(angle);
-        float y = centery + radius * std::sin(angle);
-        res.push_back({x,y});
+    for (int layer = 0; layer < numLayers; ++layer) {
+        for (int pointOnLayer = 0; pointOnLayer < numPointsPerLayer; ++pointOnLayer) {
+            double angle = (layer * numPointsPerLayer + pointOnLayer) * (360.0 / (numPointsPerLayer * goldenRatio));
+            double radius = scalingFactor * std::sqrt(layer * numPointsPerLayer + pointOnLayer);
+            float x = centerx + radius * std::cos(angle);
+            float y = centery + radius * std::sin(angle);
+            res.push_back({x,y});
+        }
     }
     return res;
 }
