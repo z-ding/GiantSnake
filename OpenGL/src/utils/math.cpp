@@ -63,26 +63,17 @@ std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposen
     return cur;
 };
 
-// pass in Center of the spiral, radious, angle, Number of spiral arms
-std::vector < std::pair<float, float>> fibonaccispiral(double centerX, double centerY, int screenWidth, int screenHeight, double radius, double angle, int arms) {
-    double goldenRatio = (1.0 + std::sqrt(5.0)) / 2.0;
-    // Number of points in each arm
-    int pointsPerArm = 500;
-    // Angle increment for each point
-    double angleIncrement = 2.0 * M_PI * (1.0 - 1.0 / goldenRatio);
+// pass in scaling factor to adjust the distance between each layer
+std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, int centerx, int centery, double scalingFactor) {
+    double goldenRatio = 1.61803398875;
     std::vector < std::pair<float, float>> res;
     // Draw the Fibonacci spiral
-    for (int arm = 0; arm < arms; ++arm) {
-        for (int i = 0; i < pointsPerArm; ++i) {
-            double x = centerX + radius * std::cos(angle);
-            double y = centerY - radius * std::sin(angle); // Negative sin to invert the y-axis
-            if (x < 0 || y < 0 || x >= grid[0].size() || y >= grid.size()) break;
-            // Draw point (you might use a graphics library like SFML or OpenGL for this)
-            res.push_back({x,y});
-
-            angle += angleIncrement;
-            radius *= goldenRatio;
-        }
+    for (int i = 0; i < numPoints; ++i) {
+        double angle = i * (360.0 / goldenRatio);
+        double radius = scalingFactor*std::sqrt(i);
+        float x = centerx+ radius * std::cos(angle);
+        float y = centery + radius * std::sin(angle);
+        res.push_back({x,y});
     }
     return res;
 }

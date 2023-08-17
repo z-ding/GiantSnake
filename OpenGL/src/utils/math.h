@@ -9,4 +9,4 @@ std::pair<float, float> interpolate(float startx, float starty, float endx, floa
 std::pair<float, float> simulateBulletTrajectory(float startx, float starty, float endx, float endy, double initialVelocity, double timeInterval);
 std::shared_ptr<allpurposenode> findMiddleOfList(std::shared_ptr<allpurposenode> head);
 std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposenode> head);
-std::vector < std::pair<float, float>> fibonaccispiral(double centerX, double centerY, int screenWidth, int screenHeight, double radius, double angle, int arms);
+std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, int centerx, int centery,double scalingFactor);
