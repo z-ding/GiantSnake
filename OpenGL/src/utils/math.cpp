@@ -1,4 +1,5 @@
 #include "math.h"
+#include "./global.h"
 std::pair<float,float> rotatePoint(float x, float y, float centerx, float centery, float angle) {
     float x1;
     float y1;
@@ -62,39 +63,26 @@ std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposen
     return cur;
 };
 
-const double PI = 3.141592653589793238463;
-std::vector<std::pair<float, float>> fibonaccispiral() {
-    const int screenWidth = 800;
-    const int screenHeight = 800;
-
-    // Center of the screen
-    const double centerX = screenWidth / 2.0;
-    const double centerY = screenHeight / 2.0;
-
-    double radius = 1.0;
-    double angle = 0.0;
+// pass in Center of the spiral, radious, angle, Number of spiral arms
+std::vector < std::pair<float, float>> fibonaccispiral(double centerX, double centerY, int screenWidth, int screenHeight, double radius, double angle, int arms) {
     double goldenRatio = (1.0 + std::sqrt(5.0)) / 2.0;
-
-    // Number of spiral arms
-    int arms = 20;
-
     // Number of points in each arm
     int pointsPerArm = 500;
-
     // Angle increment for each point
-    double angleIncrement = 2.0 * PI * (1.0 - 1.0 / goldenRatio);
-
+    double angleIncrement = 2.0 * M_PI * (1.0 - 1.0 / goldenRatio);
+    std::vector < std::pair<float, float>> res;
     // Draw the Fibonacci spiral
     for (int arm = 0; arm < arms; ++arm) {
         for (int i = 0; i < pointsPerArm; ++i) {
             double x = centerX + radius * std::cos(angle);
             double y = centerY - radius * std::sin(angle); // Negative sin to invert the y-axis
-
+            if (x < 0 || y < 0 || x >= grid[0].size() || y >= grid.size()) break;
             // Draw point (you might use a graphics library like SFML or OpenGL for this)
-            std::cout << "Draw point at (" << x << ", " << y << ")" << std::endl;
+            res.push_back({x,y});
 
             angle += angleIncrement;
             radius *= goldenRatio;
         }
     }
+    return res;
 }

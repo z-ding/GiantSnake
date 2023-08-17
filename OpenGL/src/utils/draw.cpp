@@ -2,7 +2,7 @@
 void drawCircle(float x, float y, float radius, char type) {
 	const int numSegments = 100;
 	glBegin(GL_TRIANGLE_FAN);
-	if (type == 'g' || type == 'G') {
+	if (type == 'g' || type == 'G' || type == 'f') {
 		glColor3f(0.0f, 1.0f, 0.0f); // Green color for greenbody
 	}
 	else if (type == 'b' || type == 'B') {

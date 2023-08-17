@@ -5,6 +5,7 @@
 #include "snake.h"
 #include "items.h"
 #include "enemies.h"
+#include "map.h"
 #include "utils/inputhandler.h"
 #include <WinSock2.h>
 #define WIDTH 600
@@ -45,7 +46,7 @@ int main(void)
     /* Loop until the user closes the window */
     std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
     fillgrid(WIDTH, HEIGHT, empty);
-
+    auto fibonaccimap = std::make_unique<map>(1);
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
@@ -60,6 +61,7 @@ int main(void)
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+        fibonaccimap->drawMap();
         if (itemlist->sizegetter() < cap) {
             itemlist->generateoneitem();
         }
