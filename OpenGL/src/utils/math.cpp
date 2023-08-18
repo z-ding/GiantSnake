@@ -74,6 +74,8 @@ std::vector < std::pair<float, float>> fibonaccispiral(int numPointsPerLayer, in
             double radius = scalingFactor * std::sqrt(layer * numPointsPerLayer + pointOnLayer);
             float x = centerx + radius * std::cos(angle);
             float y = centery + radius * std::sin(angle);
+            if (x < 0 || y < 0 || x >= grid[0].size() || y >= grid.size()) break;
+
             res.push_back({x,y});
         }
     }

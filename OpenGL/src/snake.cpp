@@ -35,12 +35,37 @@ void snake::emplace_back(float x, float y, char t) {//add a node on the back
 	tail = node;
 }
 
-void snake::move(std::shared_ptr<items> itemlist) {
+void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenode> &curloc) {
 	shootline.clear();
 	// Move the snake
 	float dx = 0, dy = 0;
 	float speed = default_radius*2;
+	auto cur = curloc;
 	switch (snakedir) {
+	case -4: //follow the fibonacci next ptrs
+		if (curloc->getter().next != nullptr) {
+			float curx = cur->getter().x;
+			float cury = cur->getter().y;
+			cur = cur->getter().next;
+			curloc = cur;
+			float nextx = cur->getter().x;
+			float nexty = cur->getter().y;
+			dx = nextx - curx;
+			dy = nexty - cury;
+		}
+		break;
+	case 4://follow the fibonacci prev ptrs
+		if (curloc->getter().prev != nullptr) {
+			float curx = cur->getter().x;
+			float cury = cur->getter().y;
+			cur = cur->getter().prev;
+			curloc = cur;
+			float nextx = cur->getter().x;
+			float nexty = cur->getter().y;
+			dx = nextx - curx;
+			dy = nexty - cury;
+		}
+		break;
 	case 0://up
 		dy = -speed;
 		break;
@@ -54,7 +79,7 @@ void snake::move(std::shared_ptr<items> itemlist) {
 		dx = speed;
 		break;
 	}
-	std::shared_ptr<allpurposenode> cur = head;
+	cur = head;
 	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy nodem
 	float prevx = cur->getter().x;
 	float prevy = cur->getter().y;
@@ -62,7 +87,7 @@ void snake::move(std::shared_ptr<items> itemlist) {
 	float nexty = prevy + dy;
 	checkalive(nextx, nexty);//check whether new head location is valid
 	if (!alive) return;
-	char itemt;
+	char itemt = 'x';
 	for (auto& e : itemlist->listgetter()) {
 		int itemx = e->getter().x;
 		int itemy = e->getter().y;
@@ -94,7 +119,7 @@ void snake::move(std::shared_ptr<items> itemlist) {
 void snake::checkalive(float x, float y) {
 	int ascii = int(grid[x][y]->getter().text);
 	if (ascii >= 65 && ascii <= 90) return;//collision with an item
-	if (x <= 0 || y <= 0 || x >= grid[0].size() || y >= grid.size() || grid[x][y] -> getter().text != 'e') {
+	if (x <= 0 || y <= 0 || x >= grid[0].size() || y >= grid.size() ) {//|| grid[x][y] -> getter().text != 'e'
 		std::cout << "snake game over" << std::endl;
 		alive = false;
 		return;

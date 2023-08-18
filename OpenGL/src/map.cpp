@@ -18,7 +18,8 @@ map::map(int n) {
 		}
 	}
 	for (auto& e : centers) {
-		auto coordinates = fibonaccispiral(1000,10, e.first,e.second,10.0);
+		auto coordinates = fibonaccispiral(1000,10
+			, e.first,e.second,10.0);
 		std::shared_ptr<allpurposenode> parentnode;
 		for (int i = 0; i < coordinates.size(); i++) {
 			int x = coordinates[i].first;

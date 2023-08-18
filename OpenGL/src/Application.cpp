@@ -46,7 +46,8 @@ int main(void)
     /* Loop until the user closes the window */
     std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
     fillgrid(WIDTH, HEIGHT, empty);
-    auto fibonaccimap = std::make_unique<map>(1);
+    std::unique_ptr<map> fibonaccimap = std::make_unique<map>(1);
+    auto snakeloc = fibonaccimap->mp[0];
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
@@ -55,8 +56,7 @@ int main(void)
     Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
     Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
     Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2
-    ));
+    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
@@ -68,9 +68,10 @@ int main(void)
         bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
         player->displayshootline();
         //move snake
+
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
-            player->move(itemlist); // Update the snake's position
+            player->move(itemlist, snakeloc); // Update the snake's position
             for (auto& e : Enemies) {
                 e->move(player->gethead());
                 e->rotate();//move and rotate the enemy

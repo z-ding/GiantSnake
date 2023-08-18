@@ -2,6 +2,7 @@
 #include "node.h"
 #include "items.h"
 #include "enemies.h"
+#include "map.h"
 
 
 class snake {
@@ -16,7 +17,7 @@ public:
 	~snake();//destuctor
 	std::shared_ptr<allpurposenode> gethead();
 	std::shared_ptr<allpurposenode> gettail();
-	void move(std::shared_ptr<items> i);
+	void move(std::shared_ptr<items> i,  std::shared_ptr<allpurposenode> &curloc);
 	void checkalive(float x, float y);
 	void emplace_back(float x, float y, char t);
 	void drawsnake();
