@@ -1,7 +1,7 @@
 #include "snake.h"
 #include "./utils/global.h"
 
-int default_radius = 10;
+int default_radius = 5;
 std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
 void fillgrid(int x, int y, std::shared_ptr < allpurposenode> s) {
 	for (int i = 0; i <= x; i++) {
@@ -52,6 +52,7 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 			float nexty = cur->getter().y;
 			dx = nextx - curx;
 			dy = nexty - cury;
+			//std::cout << dx << "," << dy << std::endl;
 		}
 		break;
 	case 4://follow the fibonacci prev ptrs
@@ -119,7 +120,7 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 void snake::checkalive(float x, float y) {
 	int ascii = int(grid[x][y]->getter().text);
 	if (ascii >= 65 && ascii <= 90) return;//collision with an item
-	if (x <= 0 || y <= 0 || x >= grid[0].size() || y >= grid.size() ) {//|| grid[x][y] -> getter().text != 'e'
+	if (x <default_radius || y < default_radius || x >= grid[0].size()- default_radius || y >= grid.size() - default_radius) {//|| grid[x][y] -> getter().text != 'e'
 		std::cout << "snake game over" << std::endl;
 		alive = false;
 		return;

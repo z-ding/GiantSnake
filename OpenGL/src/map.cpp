@@ -18,19 +18,14 @@ map::map(int n) {
 		}
 	}
 	for (auto& e : centers) {
-		auto coordinates = fibonaccispiral(1000,10
-			, e.first,e.second,10.0);
-		std::shared_ptr<allpurposenode> parentnode;
-		for (int i = 0; i < coordinates.size(); i++) {
+		auto coordinates = fibonaccispiral(10000, e.first,e.second);
+		std::shared_ptr<allpurposenode> parentnode = std::make_shared<allpurposenode>('f', coordinates[0].first, coordinates[0].second, 1);
+		mp.emplace_back(parentnode);
+		for (int i = 1; i < coordinates.size(); i++) {
 			int x = coordinates[i].first;
 			int y = coordinates[i].second;
 			auto node = std::make_shared<allpurposenode>('f', x, y, 1);
-			if (i == 0) {
-				mp.push_back(node);				
-			}
-			else {
-				connectnodes(parentnode, node);
-			}
+			connectnodes(parentnode, node);			
 			parentnode = node;
 		}
 	}

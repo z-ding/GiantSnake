@@ -10,7 +10,7 @@
 #include <WinSock2.h>
 #define WIDTH 600
 #define HEIGHT 600
-#define MOVE_INTERVAL 0.5
+#define MOVE_INTERVAL 0.01
 // Adjust the speed by changing this value
 const int PORT = 12345;
 int main(void)
@@ -46,17 +46,18 @@ int main(void)
     /* Loop until the user closes the window */
     std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
     fillgrid(WIDTH, HEIGHT, empty);
-    std::unique_ptr<map> fibonaccimap = std::make_unique<map>(1);
+    std::unique_ptr<map> fibonaccimap = std::make_unique<map>(5
+    );
     auto snakeloc = fibonaccimap->mp[0];
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
     std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
     std::vector<std::shared_ptr<enemies>> Enemies;
-    Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
-    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
+    //Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
+    //Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
