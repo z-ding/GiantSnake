@@ -67,13 +67,19 @@ std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposen
 std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, float centerx, float centery) {
     double goldenRatio = 1.61803398875;
     double angle = 0.0;
+    double targetDistance = default_radius*2; // Adjust as needed
+    double k = 1.0 / (goldenRatio * 3.14); // Adjust as needed
     double angleIncrement = 0.1; // Adjust as needed
     std::vector < std::pair<float, float>> res;
     for (int i = 0; i < numPoints; ++i) {
         double radius = exp(angle / (goldenRatio * 3.14)); // Adjust as needed
         float x = centerx + radius * cos(angle);
         float y = centery + radius * sin(angle);
+        //if (x < default_radius || y < default_radius || x >= grid[0].size() - default_radius || y >= grid.size() - default_radius) {
+           //break;
+        //}
         res.push_back({ x,y });
+        double angleIncrement = targetDistance / exp(k * angle);
         angle += angleIncrement;
     }
     return res;

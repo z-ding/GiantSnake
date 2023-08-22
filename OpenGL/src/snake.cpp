@@ -54,6 +54,9 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 			dy = nexty - cury;
 			//std::cout << dx << "," << dy << std::endl;
 		}
+		else {
+			std::cout << "end of spiral" << std::endl;
+		}
 		break;
 	case 4://follow the fibonacci prev ptrs
 		if (curloc->getter().prev != nullptr) {
