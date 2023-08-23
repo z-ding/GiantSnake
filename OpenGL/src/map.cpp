@@ -1,20 +1,20 @@
 #include "map.h"
 #include "./utils/global.h"
 map::map(int n) {
-	centers.insert({ 300,300 });
+	centers.push_back({ 300,300 });
 	for (int i = 1; i < n; i++) {
 		float randx = rand() % grid[0].size();
 		float randy = rand() % grid.size();
 		auto p = std::make_pair(randx, randy);
-		if (centers.find(p) == centers.end()) {
-			centers.insert(p);
+		if (find(centers.begin(),centers.end(),p) == centers.end()) {
+			centers.push_back(p);
 		}
 		else {
-			while (centers.find(p) != centers.end()) {
+			while (find(centers.begin(), centers.end(), p) != centers.end()) {
 				float randx = rand() % grid[0].size();
 				float randy = rand() % grid.size();
 			}
-			centers.insert(p);
+			centers.push_back(p);
 		}
 	}
 	for (auto& e : centers) {

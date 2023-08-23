@@ -54,10 +54,10 @@ int main(void)
     int cap = 10;
     std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
     std::vector<std::shared_ptr<enemies>> Enemies;
-    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
-    //Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
-    //Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
-    //Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
+    Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
+    Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
+    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
+    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */

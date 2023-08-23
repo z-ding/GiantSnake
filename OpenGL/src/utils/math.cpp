@@ -75,9 +75,9 @@ std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, float cent
         double radius = exp(angle / (goldenRatio * 3.14)); // Adjust as needed
         float x = centerx + radius * cos(angle);
         float y = centery + radius * sin(angle);
-        //if (x < default_radius || y < default_radius || x >= grid[0].size() - default_radius || y >= grid.size() - default_radius) {
-           //break;
-        //}
+        if (x < default_radius || y < default_radius || x >= grid[0].size() - default_radius || y >= grid.size() - default_radius) {
+           break;
+        }
         res.push_back({ x,y });
         double angleIncrement = targetDistance / exp(k * angle);
         angle += angleIncrement;

@@ -55,7 +55,7 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 			//std::cout << dx << "," << dy << std::endl;
 		}
 		else {
-			std::cout << "end of spiral" << std::endl;
+			locksnakedir = false;//force user to move after reaching the end
 		}
 		break;
 	case 4://follow the fibonacci prev ptrs
@@ -68,6 +68,9 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 			float nexty = cur->getter().y;
 			dx = nextx - curx;
 			dy = nexty - cury;
+		}
+		else {
+			locksnakedir = false;//force user to move after reaching the end
 		}
 		break;
 	case 0://up
