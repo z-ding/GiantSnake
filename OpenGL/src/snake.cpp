@@ -1,5 +1,6 @@
 #include "snake.h"
 #include "./utils/global.h"
+//
 
 int default_radius = 5;
 std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
