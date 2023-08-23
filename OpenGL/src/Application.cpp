@@ -52,12 +52,12 @@ int main(void)
     std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
-    std::shared_ptr<items> itemlist = std::make_shared<items>(cap,emptylist);
+    std::unique_ptr<items> itemlist = std::make_unique<items>(cap,emptylist);
     std::vector<std::shared_ptr<enemies>> Enemies;
-    Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
-    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
+   // Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
+    //Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */
@@ -72,7 +72,7 @@ int main(void)
 
         double currentTime = glfwGetTime();
         if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
-            player->move(itemlist, snakeloc); // Update the snake's position
+            player->move(itemlist, snakeloc,fibonaccimap); // Update the snake's position
             for (auto& e : Enemies) {
                 e->move(player->gethead());
                 e->rotate();//move and rotate the enemy

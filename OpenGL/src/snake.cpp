@@ -35,7 +35,7 @@ void snake::emplace_back(float x, float y, char t) {//add a node on the back
 	tail = node;
 }
 
-void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenode> &curloc) {
+void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposenode> &curloc, std::unique_ptr<map> &fibonaccimap) {
 	shootline.clear();
 	// Move the snake
 	float dx = 0, dy = 0;
@@ -93,6 +93,18 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 	float nextx = prevx + dx;
 	float nexty = prevy + dy;
 	checkalive(nextx, nexty);//check whether new head location is valid
+	//lock snake dir if next location is the center of a fibonacci spiral
+	for (auto& e : fibonaccimap->mp) {
+		float cx = e->getter().x;
+		float cy = e->getter().y;
+		if ((nextx - cx) * (nextx - cx) + (nexty - cy) * (nexty - cy) < (1 + default_radius) * (1 + default_radius)) {
+			std::cout << "collide into center" << std::endl;
+			snakedir = -4;
+			locksnakedir = true;
+			curloc = e;
+			break;
+		}
+	}
 	if (!alive) return;
 	char itemt = 'x';
 	for (auto& e : itemlist->listgetter()) {
@@ -124,9 +136,13 @@ void snake::move(std::shared_ptr<items> itemlist,  std::shared_ptr<allpurposenod
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
 void snake::checkalive(float x, float y) {
+	if (x <default_radius || y < default_radius || x >= grid[0].size()- default_radius || y >= grid.size() - default_radius ) {//
+		std::cout << "snake game over" << std::endl;
+		alive = false;
+		return;
+	}
 	int ascii = int(grid[x][y]->getter().text);
-	if (ascii >= 65 && ascii <= 90) return;//collision with an item
-	if (x <default_radius || y < default_radius || x >= grid[0].size()- default_radius || y >= grid.size() - default_radius) {//|| grid[x][y] -> getter().text != 'e'
+	if (ascii >= 97 && ascii <= 122 && grid[x][y]->getter().text != 'e') {//snake head meet body node
 		std::cout << "snake game over" << std::endl;
 		alive = false;
 		return;
