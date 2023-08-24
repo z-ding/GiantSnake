@@ -148,6 +148,7 @@
     <ClCompile Include="src\utils\draw.cpp" />
     <ClCompile Include="src\utils\inputhandler.cpp" />
     <ClCompile Include="src\utils\math.cpp" />
+    <ClCompile Include="src\utils\screenlogic.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\enemies.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="src\utils\inputhandler.h" />
     <ClInclude Include="src\items.h" />
     <ClInclude Include="src\utils\math.h" />
+    <ClInclude Include="src\utils\screenlogic.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

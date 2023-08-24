@@ -2,6 +2,7 @@
 #include <iostream>
 #include <memory>
 #include "./utils/draw.h"
+#include "./utils/screenlogic.h"
 #include<unordered_set>
 
 struct snode;

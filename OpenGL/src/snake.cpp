@@ -253,14 +253,16 @@ void snake::drawsnake() {
 	std::shared_ptr<allpurposenode> current = head;
 	while (current != nullptr) {//simulation, moving upwnward
 		snode node = current->getter();
-		drawCircle(node.x, node.y, default_radius, node.text);
+		auto screenpos = logicalToScreenCoordinates(node.x, node.y);
+		drawCircle(screenpos.first, screenpos.second, default_radius, node.text);
 		current = node.next;
 	}
 };
 void snake::displayshootline() {
 	//if (shootline.size()) std::cout << shootline.size() << std::endl;
 	for (int i = 0; i < shootline.size(); i++) {
-		drawCircle(shootline[i].first, shootline[i].second, 1.0, 'p');
+		auto screenpos = logicalToScreenCoordinates(shootline[i].first, shootline[i].second);
+		drawCircle(screenpos.first, screenpos.second, 1.0, 'p');
 	}
 }
 

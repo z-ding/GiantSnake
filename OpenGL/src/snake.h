@@ -4,7 +4,6 @@
 #include "enemies.h"
 #include "map.h"
 
-
 class snake {
 private:
 	std::shared_ptr<allpurposenode> head;
