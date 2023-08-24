@@ -3,16 +3,16 @@
 map::map(int n) {
 	centers.push_back({ 300,300 });
 	for (int i = 1; i < n; i++) {
-		float randx = rand() % grid[0].size();
-		float randy = rand() % grid.size();
+		float randx = rand() % logicalWidth;
+		float randy = rand() % logicalHeight;
 		auto p = std::make_pair(randx, randy);
 		if (find(centers.begin(),centers.end(),p) == centers.end()) {
 			centers.push_back(p);
 		}
 		else {
 			while (find(centers.begin(), centers.end(), p) != centers.end()) {
-				float randx = rand() % grid[0].size();
-				float randy = rand() % grid.size();
+				float randx = rand() % logicalWidth;
+				float randy = rand() % logicalHeight;
 			}
 			centers.push_back(p);
 		}

@@ -3,6 +3,11 @@
 //snake
 
 int default_radius = 5;
+int logicalWidth = 800;
+int logicalHeight
+= 800;
+int windowWidth = 600;
+int windowHeight = 600;
 std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
 void fillgrid(int x, int y, std::shared_ptr < allpurposenode> s) {
 	for (int i = 0; i <= x; i++) {
@@ -137,7 +142,7 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
 void snake::checkalive(float x, float y) {
-	if (x <default_radius || y < default_radius || x >= grid[0].size()- default_radius || y >= grid.size() - default_radius ) {//
+	if (x <default_radius || y < default_radius || x >= logicalWidth- default_radius || y >= logicalHeight - default_radius ) {//
 		std::cout << "snake game over" << std::endl;
 		alive = false;
 		return;
@@ -188,7 +193,7 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 				}
 			}
 
-			for (float i = heady + 1; i < grid.size(); i += 1) {
+			for (float i = heady + 1; i < logicalHeight; i += 1) {
 				if (grid[headx][i]-> getter().text != 'e') {//erase this node
 					erase(headx, i);
 				}
@@ -229,7 +234,7 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 					Enemies.erase(Enemies.begin() + i);
 				}
 			}
-			for (float i = headx + 1; i < grid[0].size(); i += 1) {
+			for (float i = headx + 1; i < logicalWidth; i += 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
 					//break;

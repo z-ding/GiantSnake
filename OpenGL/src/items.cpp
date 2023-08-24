@@ -23,8 +23,8 @@ void items::generateoneitem() {
 	int x = -1;
 	int y = -1;
 	while (x < 0 || grid[x][y]->getter().text != 'e') {//generate a random position until it's a empty cell
-		x = rand() % (grid[0].size() - 30) + 15;
-		y = rand() % (grid.size() - 30) + 15;
+		x = rand() % (logicalWidth - 30) + 15;
+		y = rand() % (logicalHeight - 30) + 15;
 	}
 	std::shared_ptr<allpurposenode> node = std::make_shared<allpurposenode>(t, x, y, default_radius);
 	itemlist.emplace(node);

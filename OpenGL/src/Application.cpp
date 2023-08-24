@@ -7,9 +7,8 @@
 #include "enemies.h"
 #include "map.h"
 #include "utils/inputhandler.h"
+#include "utils/global.h"
 #include <WinSock2.h>
-#define WIDTH 600
-#define HEIGHT 600
 #define MOVE_INTERVAL 0.5
 // Adjust the speed by changing this value
 const int PORT = 12345;
@@ -24,7 +23,7 @@ int main(void)
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(WIDTH, HEIGHT, "Giant Snake", NULL, NULL);
+    window = glfwCreateWindow(windowWidth, windowHeight, "Giant Snake", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -36,7 +35,7 @@ int main(void)
 
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
-    glOrtho(0, WIDTH, HEIGHT, 0, -1, 1);
+    glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
@@ -45,11 +44,11 @@ int main(void)
     }
     /* Loop until the user closes the window */
     std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
-    fillgrid(WIDTH, HEIGHT, empty);
+    fillgrid(logicalWidth,logicalHeight, empty);
     std::unique_ptr<map> fibonaccimap = std::make_unique<map>(5
     );
     auto snakeloc = fibonaccimap->mp[0];
-    std::unique_ptr<snake> player = std::make_unique<snake>(WIDTH / 2, HEIGHT / 2);
+    std::unique_ptr<snake> player = std::make_unique<snake>(windowWidth / 2, windowHeight / 2);
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     int cap = 10;
     std::unique_ptr<items> itemlist = std::make_unique<items>(cap,emptylist);

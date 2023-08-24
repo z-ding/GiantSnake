@@ -84,8 +84,8 @@ void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
 		middley = target->getter().y;
 	}
 	else {//move randomly
-		middlex = rand() % grid[0].size();
-		middley = rand() % grid.size();
+		middlex = rand() % logicalWidth;
+		middley = rand() % logicalHeight;
 	}
 	//shoot a bullet
 	auto newbullet = std::make_shared<bullet>(center_x, center_y,middlex,middley);
@@ -123,7 +123,7 @@ bool enemies :: kill(std::shared_ptr<allpurposenode> snakehead) {
 void enemies::movebullet() {
 	for (int i = bullets.size() - 1; i >= 0; i--) {
 		auto nextloc = simulateBulletTrajectory(bullets[i]->locationx, bullets[i]->locationy, bullets[i]->targetx, bullets[i]->targety, 10, 0.5);
-		if (nextloc.first < 0 || nextloc.second < 0 || nextloc.first >= grid[0].size() || nextloc.second >= grid.size()) {
+		if (nextloc.first < 0 || nextloc.second < 0 || nextloc.first >= logicalWidth || nextloc.second >= logicalHeight) {
 			//std::cout << "bullet out of bound" << std::endl;
 			bullets.erase(bullets.begin() + i);
 		}
