@@ -16,3 +16,5 @@ extern std::unique_ptr<items> itemlist;
 extern std::vector<std::shared_ptr<enemies>> Enemies;
 extern std::shared_ptr<allpurposenode> snakeloc;
 extern int cap;
+extern double MOVE_INTERVAL;
+extern double lastMoveTime;

@@ -10,7 +10,7 @@
 #include "utils/global.h"
 #include "utils/gamelogic.h"
 #include <WinSock2.h>
-#define MOVE_INTERVAL 0.5
+
 // Adjust the speed by changing this value
 std::unique_ptr<map> fibonaccimap;
 std::unique_ptr<snake> player;
@@ -18,12 +18,12 @@ std::unique_ptr<items> itemlist;
 std::vector<std::shared_ptr<enemies>> Enemies;
 std::shared_ptr<allpurposenode> snakeloc;
 int cap;
+double MOVE_INTERVAL = 0.5;
+double lastMoveTime = glfwGetTime();
 int main(void)
 {
-
-
     GLFWwindow* window;
-    double lastMoveTime = glfwGetTime();
+    
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -52,31 +52,16 @@ int main(void)
     initializegame();
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
+        updategame();
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
+        
         fibonaccimap->drawMap();
-        if (itemlist->sizegetter() < cap) {
-            itemlist->generateoneitem();
-        }
-        bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
+
         player->displayshootline();
         //move snake
-
-        double currentTime = glfwGetTime();
-        if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
-            player->move(itemlist, snakeloc,fibonaccimap); // Update the snake's position
-            for (auto& e : Enemies) {
-                e->move(player->gethead());
-                e->rotate();//move and rotate the enemy
-                if (e->kill(player->gethead())) {
-                    player->alive = false;
-                    std::cout << "killed by enemy gameover" << std::endl;
-                    return 0;
-                }
-                e->movebullet();
-            }
-            lastMoveTime = currentTime; // Reset the timer
-        }        
+        
+        double currentTime = glfwGetTime();     
         // Draw the items and snake
         itemlist->drawitems();
         player->drawsnake();

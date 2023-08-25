@@ -16,3 +16,25 @@ void initializegame() {
     Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20, 2));
     Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20, 2));
 }
+
+void updategame() {
+    if (itemlist->sizegetter() < cap) {
+        itemlist->generateoneitem();
+    }
+    bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
+    double currentTime = glfwGetTime();
+    if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
+        player->move(itemlist, snakeloc, fibonaccimap); // Update the snake's position
+        for (auto& e : Enemies) {
+            e->move(player->gethead());
+            e->rotate();//move and rotate the enemy
+            if (e->kill(player->gethead())) {
+                player->alive = false;
+                std::cout << "killed by enemy gameover" << std::endl;
+                return;
+            }
+            e->movebullet();
+        }
+        lastMoveTime = currentTime; // Reset the timer
+    }
+}
