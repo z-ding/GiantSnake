@@ -20,6 +20,7 @@ std::shared_ptr<allpurposenode> snakeloc;
 int cap;
 double MOVE_INTERVAL = 0.5;
 double lastMoveTime = glfwGetTime();
+double currentTime;
 int main(void)
 {
     GLFWwindow* window;
@@ -54,23 +55,8 @@ int main(void)
     {
         updategame();
         /* Render here */
-        glClear(GL_COLOR_BUFFER_BIT);
-        
-        fibonaccimap->drawMap();
-
-        player->displayshootline();
-        //move snake
-        
-        double currentTime = glfwGetTime();     
-        // Draw the items and snake
-        itemlist->drawitems();
-        player->drawsnake();
-        for (auto& e : Enemies) {
-            e->drawenemy();
-            e->drawbullets();
-
-        }
-        currentTime = glfwGetTime();                         
+        glClear(GL_COLOR_BUFFER_BIT);   
+        render();
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
         /* Poll for and process events */

@@ -18,3 +18,4 @@ extern std::shared_ptr<allpurposenode> snakeloc;
 extern int cap;
 extern double MOVE_INTERVAL;
 extern double lastMoveTime;
+extern double currentTime;

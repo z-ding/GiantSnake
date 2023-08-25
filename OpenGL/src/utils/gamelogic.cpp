@@ -22,7 +22,7 @@ void updategame() {
         itemlist->generateoneitem();
     }
     bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
-    double currentTime = glfwGetTime();
+    currentTime = glfwGetTime();
     if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
         player->move(itemlist, snakeloc, fibonaccimap); // Update the snake's position
         for (auto& e : Enemies) {
@@ -36,5 +36,18 @@ void updategame() {
             e->movebullet();
         }
         lastMoveTime = currentTime; // Reset the timer
+    }
+}
+
+void render() {
+    fibonaccimap->drawMap();
+    player->displayshootline();
+    currentTime = glfwGetTime();    // Draw the items and snake
+    itemlist->drawitems();
+    player->drawsnake();
+    for (auto& e : Enemies) {
+        e->drawenemy();
+        e->drawbullets();
+
     }
 }
