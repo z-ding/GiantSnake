@@ -104,7 +104,6 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 		float cx = e->getter().x;
 		float cy = e->getter().y;
 		if ((nextx - cx) * (nextx - cx) + (nexty - cy) * (nexty - cy) < (1 + default_radius) * (1 + default_radius)) {
-			std::cout << "collide into center" << std::endl;
 			snakedir = -4;
 			locksnakedir = true;
 			curloc = e;
@@ -143,14 +142,16 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 }
 void snake::checkalive(float x, float y) {
 	if (x <default_radius || y < default_radius || x >= logicalWidth- default_radius || y >= logicalHeight - default_radius ) {//
-		std::cout << "snake game over" << std::endl;
+		//std::cout << "snake game over" << std::endl;
 		alive = false;
+		gameover = true;
 		return;
 	}
 	int ascii = int(grid[x][y]->getter().text);
 	if (ascii >= 97 && ascii <= 122 && grid[x][y]->getter().text != 'e') {//snake head meet body node
-		std::cout << "snake game over" << std::endl;
+		//std::cout << "snake game over" << std::endl;
 		alive = false;
+		gameover = true;
 		return;
 	}
 

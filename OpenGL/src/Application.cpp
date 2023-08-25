@@ -21,6 +21,7 @@ int cap;
 double MOVE_INTERVAL = 0.5;
 double lastMoveTime = glfwGetTime();
 double currentTime;
+bool gameover = false;
 int main(void)
 {
     GLFWwindow* window;

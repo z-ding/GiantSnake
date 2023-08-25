@@ -19,3 +19,4 @@ extern int cap;
 extern double MOVE_INTERVAL;
 extern double lastMoveTime;
 extern double currentTime;
+extern bool gameover;

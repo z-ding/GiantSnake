@@ -30,12 +30,17 @@ void updategame() {
             e->rotate();//move and rotate the enemy
             if (e->kill(player->gethead())) {
                 player->alive = false;
-                std::cout << "killed by enemy gameover" << std::endl;
-                return;
+                gameover = true;
+                //std::cout << "killed by enemy gameover" << std::endl;
+                //return;
             }
             e->movebullet();
         }
         lastMoveTime = currentTime; // Reset the timer
+    }
+    if (gameover) {
+        std::cout << "gameover" << std::endl;
+        return;
     }
 }
 
