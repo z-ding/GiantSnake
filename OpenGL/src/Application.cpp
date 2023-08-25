@@ -8,10 +8,16 @@
 #include "map.h"
 #include "utils/inputhandler.h"
 #include "utils/global.h"
+#include "utils/gamelogic.h"
 #include <WinSock2.h>
 #define MOVE_INTERVAL 0.5
 // Adjust the speed by changing this value
-const int PORT = 12345;
+std::unique_ptr<map> fibonaccimap;
+std::unique_ptr<snake> player;
+std::unique_ptr<items> itemlist;
+std::vector<std::shared_ptr<enemies>> Enemies;
+std::shared_ptr<allpurposenode> snakeloc;
+int cap;
 int main(void)
 {
 
@@ -43,20 +49,7 @@ int main(void)
         std::cout << "error glew init" << std::endl;
     }
     /* Loop until the user closes the window */
-    std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
-    fillgrid(logicalWidth,logicalHeight, empty);
-    std::unique_ptr<map> fibonaccimap = std::make_unique<map>(5
-    );
-    auto snakeloc = fibonaccimap->mp[0];
-    std::unique_ptr<snake> player = std::make_unique<snake>(windowWidth / 2, windowHeight / 2);
-    std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
-    int cap = 10;
-    std::unique_ptr<items> itemlist = std::make_unique<items>(cap,emptylist);
-    std::vector<std::shared_ptr<enemies>> Enemies;
-    Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20,0));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20,1));
-    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20,2));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20,2));
+    initializegame();
     while (!glfwWindowShouldClose(window) && player -> alive)
     {
         /* Render here */

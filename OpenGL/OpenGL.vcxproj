@@ -146,6 +146,7 @@
     <ClCompile Include="src\node.cpp" />
     <ClCompile Include="src\snake.cpp" />
     <ClCompile Include="src\utils\draw.cpp" />
+    <ClCompile Include="src\utils\gamelogic.cpp" />
     <ClCompile Include="src\utils\inputhandler.cpp" />
     <ClCompile Include="src\utils\math.cpp" />
     <ClCompile Include="src\utils\screenlogic.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="src\node.h" />
     <ClInclude Include="src\snake.h" />
     <ClInclude Include="src\utils\draw.h" />
+    <ClInclude Include="src\utils\gamelogic.h" />
     <ClInclude Include="src\utils\global.h" />
     <ClInclude Include="src\utils\inputhandler.h" />
     <ClInclude Include="src\items.h" />

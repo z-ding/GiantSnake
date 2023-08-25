@@ -3,9 +3,9 @@
 //snake
 
 int default_radius = 5;
-int logicalWidth = 800;
+int logicalWidth = 600;
 int logicalHeight
-= 800;
+= 600;
 int windowWidth = 600;
 int windowHeight = 600;
 std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
