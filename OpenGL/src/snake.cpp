@@ -98,6 +98,12 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 	float prevy = cur->getter().y;
 	float nextx = prevx + dx;
 	float nexty = prevy + dy;
+	if (allowextension && nexty <= default_radius) {//next stage
+		std::cout << "next" << std::endl;
+		nexty = logicalHeight - default_radius-1;
+		allowextension = false;
+		nextstageinitialze();
+	}
 	checkalive(nextx, nexty);//check whether new head location is valid
 	//lock snake dir if next location is the center of a fibonacci spiral
 	for (auto& e : fibonaccimap->mp) {
@@ -141,12 +147,13 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
 void snake::checkalive(float x, float y) {
-	if (x <default_radius || y < default_radius || x >= logicalWidth- default_radius || y >= logicalHeight - default_radius ) {//
+	if (x < default_radius || y < default_radius || x >= logicalWidth - default_radius || y >= logicalHeight - default_radius) {//
 		//std::cout << "snake game over" << std::endl;
 		alive = false;
 		gameover = true;
 		return;
 	}
+	
 	int ascii = int(grid[x][y]->getter().text);
 	if (ascii >= 97 && ascii <= 122 && grid[x][y]->getter().text != 'e') {//snake head meet body node
 		//std::cout << "snake game over" << std::endl;

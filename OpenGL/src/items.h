@@ -13,4 +13,5 @@ public:
 	void drawitems();
 	std::unordered_set< std::shared_ptr<allpurposenode>> listgetter();
 	int sizegetter();
+	void clearitems();
 };

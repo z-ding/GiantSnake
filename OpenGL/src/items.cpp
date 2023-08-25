@@ -43,3 +43,12 @@ void items::removeoneitem(int _x, int _y) {
 	grid[_x][_y] = e;
 	itemlist.erase(curritem);
 }
+void items::clearitems() {
+	std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
+	for (auto &e : itemlist) {
+		float x = e->getter().x;
+		float y = e->getter().y;
+		grid[x][y] = empty;
+	}
+	itemlist.clear();
+}

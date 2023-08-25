@@ -10,11 +10,10 @@ void initializegame() {
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     cap = 10;
     itemlist = std::make_unique<items>(cap, emptylist);
-    Enemies;
-    Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20, 0));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20, 1));
-    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20, 2));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20, 2));
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20, 0));
+    //Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20, 1));
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20, 2));
+    //Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20, 2));
 }
 
 void updategame() {
@@ -37,6 +36,10 @@ void updategame() {
             e->movebullet();
         }
         lastMoveTime = currentTime; // Reset the timer
+        if (!Enemies.size()) {//enemy killed
+            std::cout << "go to next stage via top of the screen" << std::endl;
+            allowextension = true;
+        }
     }
     if (gameover) {
         std::cout << "gameover" << std::endl;
@@ -55,4 +58,14 @@ void render() {
         e->drawbullets();
 
     }
+}
+
+void nextstageinitialze() {
+    Enemies.clear();
+    itemlist->clearitems();
+    fibonaccimap = std::make_unique<map>(3);   
+    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20, 0));
+    //Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20, 1));
+    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20, 2));
+    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20, 2));
 }

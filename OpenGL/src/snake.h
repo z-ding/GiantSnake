@@ -3,6 +3,7 @@
 #include "items.h"
 #include "enemies.h"
 #include "map.h"
+#include"./utils/gamelogic.h"
 
 class snake {
 private:
