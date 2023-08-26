@@ -37,7 +37,6 @@ void updategame() {
                 //std::cout << "killed by enemy gameover" << std::endl;
                 //return;
             }
-            e->movebullet();
         }
         lastMoveTime = currentTime; // Reset the timer
         if (!Enemies.size()) {//enemy killed
@@ -60,8 +59,6 @@ void render() {
     player->drawsnake();
     for (auto& e : Enemies) {
         e->drawenemy();
-        e->drawbullets();
-
     }
 }
 

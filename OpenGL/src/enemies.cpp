@@ -1,15 +1,6 @@
 #include "enemies.h"
 #include "./utils/global.h"
 float defaultenemyradius = 1;
-bullet::bullet(float x1, float y1, float x2, float y2) {
-	locationx = x1;
-	locationy = y1;
-	targetx = x2;
-	targety = y2;
-}
-bullet::~bullet() {
-
-}
 enemies::enemies(float centerx, float centery,  int length, int _type) {
 	center_x = centerx;
 	center_y = centery;
@@ -89,10 +80,6 @@ void enemies::move(std::shared_ptr<allpurposenode> snakehead) {
 		middlex = rand() % logicalWidth;
 		middley = rand() % logicalHeight;
 	}
-	//shoot a bullet
-	auto newbullet = std::make_shared<bullet>(center_x, center_y,middlex,middley);
-	bullets.emplace_back(newbullet);
-	//new bullet saved in the bullet vector
 	float speed = 0.1;
 	auto newcenter = interpolate(center_x, center_y, middlex, middley, speed);
 	float dx = newcenter.first - center_x;
@@ -122,28 +109,6 @@ bool enemies :: kill(std::shared_ptr<allpurposenode> snakehead) {
 	}
 	return false;
 }
-void enemies::movebullet() {
-	for (int i = bullets.size() - 1; i >= 0; i--) {
-		auto nextloc = simulateBulletTrajectory(bullets[i]->locationx, bullets[i]->locationy, bullets[i]->targetx, bullets[i]->targety, 10, 0.5);
-		if (nextloc.first < 0 || nextloc.second < 0 || nextloc.first >= logicalWidth || nextloc.second >= logicalHeight) {
-			//std::cout << "bullet out of bound" << std::endl;
-			bullets.erase(bullets.begin() + i);
-		}
-		else if (abs(nextloc.first - bullets[i]->targetx) < 0.1 && abs(nextloc.second - bullets[i]->targety) < 0.1) {
-			//std::cout << "bullet reached target" << std::endl;
-			bullets.erase(bullets.begin() + i);
-		}
-		else {
-			bullets[i]->locationx = nextloc.first;
-			bullets[i]->locationy = nextloc.second;
-		}
-	}
-}
-void enemies::drawbullets() {
-	for (int i = bullets.size() - 1; i >= 0; i--) {
-		auto screenpos = logicalToScreenCoordinates(bullets[i]->locationx, bullets[i]->locationy);
-		drawCircle(screenpos.first, screenpos.second, defaultenemyradius, 'x',100);
-	}
-};
+
 
 

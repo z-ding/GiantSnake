@@ -1,15 +1,6 @@
 #pragma once
 #include "node.h"
 #include "./utils/math.h"
- class bullet {
- public:
-	float locationx;
-	float locationy;
-	float targetx;
-	float targety;
-	 bullet(float x1, float y1, float x2, float y2);
-	 ~bullet();
-};
 class enemies {
 private:
 	float center_x;
@@ -18,7 +9,6 @@ private:
 	int edges;
 public:
 	int type;
-	std::vector< std::shared_ptr<bullet>> bullets;
 	std::pair<float, float> getcenter();
 	enemies(float centerx, float centery, int length, int _type);//constructor: create an empty snake with a head only
 	~enemies();//destuctor
