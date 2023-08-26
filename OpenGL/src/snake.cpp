@@ -99,7 +99,6 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 	float nextx = prevx + dx;
 	float nexty = prevy + dy;
 	if (allowextension && nexty <= default_radius) {//next stage
-		std::cout << "next" << std::endl;
 		nexty = logicalHeight - default_radius-1;
 		allowextension = false;
 		nextstageinitialze();

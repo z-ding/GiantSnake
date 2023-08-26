@@ -55,6 +55,7 @@ enemies::enemies(float centerx, float centery,  int length, int _type) {
 enemies::~enemies() {
 	// std::cout << "enemy destroyed" << std::endl;
 }
+
 std::pair<float, float> enemies::getcenter() {
 	return { center_x,center_y };
 };

@@ -23,6 +23,7 @@ double lastMoveTime = glfwGetTime();
 double currentTime;
 bool gameover = false;
 bool allowextension = false;//allow the user to go to next stage via the top of the screen when this stage is cleared
+int amountEnemy = 2;
 int main(void)
 {
     GLFWwindow* window;

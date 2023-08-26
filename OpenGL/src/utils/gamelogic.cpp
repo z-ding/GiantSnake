@@ -1,19 +1,23 @@
 #include "gamelogic.h"
 #include "global.h"
+void initializeEnemy() {
+    for (int i = 0; i < amountEnemy; i++) {
+        int randx = 30 + (rand() % (logicalWidth - 60));
+        int randy = 30 + (rand() % (logicalHeight - 60));
+        Enemies.emplace_back(std::make_shared<enemies>(randx, randy, 10, i));
+    }
+}
 void initializegame() {
     std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
     fillgrid(logicalWidth, logicalHeight, empty);
     fibonaccimap = std::make_unique<map>(5
     );
     snakeloc = fibonaccimap->mp[0];
-    player = std::make_unique<snake>(windowWidth / 2, windowHeight / 2);
+    player = std::make_unique<snake>(snakeloc -> getter().x,snakeloc->getter().y);
     std::unordered_set< std::shared_ptr<allpurposenode>> emptylist;
     cap = 10;
     itemlist = std::make_unique<items>(cap, emptylist);
-    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20, 0));
-    //Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20, 1));
-    //Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20, 2));
-    //Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20, 2));
+    initializeEnemy();
 }
 
 void updategame() {
@@ -39,6 +43,7 @@ void updategame() {
         if (!Enemies.size()) {//enemy killed
             std::cout << "go to next stage via top of the screen" << std::endl;
             allowextension = true;
+            
         }
     }
     if (gameover) {
@@ -62,10 +67,8 @@ void render() {
 
 void nextstageinitialze() {
     Enemies.clear();
+    amountEnemy++;
     itemlist->clearitems();
     fibonaccimap = std::make_unique<map>(3);   
-    //Enemies.emplace_back(std::make_shared<enemies>(30, 30, 20, 0));
-    //Enemies.emplace_back(std::make_shared<enemies>(570, 570, 20, 1));
-    Enemies.emplace_back(std::make_shared<enemies>(30, 570, 20, 2));
-    Enemies.emplace_back(std::make_shared<enemies>(570, 30, 20, 2));
+    initializeEnemy();
 }

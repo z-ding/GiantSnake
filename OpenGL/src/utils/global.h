@@ -14,6 +14,7 @@ extern std::unique_ptr<map> fibonaccimap;
 extern std::unique_ptr<snake> player;
 extern std::unique_ptr<items> itemlist;
 extern std::vector<std::shared_ptr<enemies>> Enemies;
+extern int amountEnemy;
 extern std::shared_ptr<allpurposenode> snakeloc;
 extern int cap;
 extern double MOVE_INTERVAL;

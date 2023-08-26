@@ -1,8 +1,7 @@
 #include "map.h"
 #include "./utils/global.h"
 map::map(int n) {
-	centers.push_back({ 300,300 });
-	for (int i = 1; i < n; i++) {
+	for (int i = 0; i < n; i++) {
 		float randx = rand() % logicalWidth;
 		float randy = rand() % logicalHeight;
 		auto p = std::make_pair(randx, randy);
