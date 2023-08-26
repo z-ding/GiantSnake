@@ -1,6 +1,5 @@
 #include "draw.h"
-void drawCircle(float x, float y, float radius, char type) {
-	const int numSegments = 100;
+void drawCircle(float x, float y, float radius, char type, int numSegments) {
 	glBegin(GL_TRIANGLE_FAN);
 	if (type == 'g' || type == 'G' || type == 'f') {
 		glColor3f(0.0f, 1.0f, 0.0f); // Green color for greenbody
@@ -13,6 +12,12 @@ void drawCircle(float x, float y, float radius, char type) {
 	}
 	else if (type == 'w' || type == 'W') {
 		glColor3f(1.0f, 1.0f, 1.0f);
+	}
+	else if (type == 'o' || type == 'O') {
+		glColor3f(1.0f, 0.5f, 0.0f);
+	}
+	else if (type == 'v' || type == 'V') {
+		glColor3f(0.6f, 0.0f, 1.0f);
 	}
 	else if (type == 'e') {//erase: black color
 		glColor3f(0.0f, 0.0f, 0.0f);

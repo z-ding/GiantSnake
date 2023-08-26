@@ -38,7 +38,7 @@ void map::drawMap() {
 		auto cur = e;
 		while (cur != nullptr) {
 			auto screenpos = logicalToScreenCoordinates(cur->getter().x, cur->getter().y);
-			drawCircle(screenpos.first, screenpos.second, cur->getter().r, cur->getter().text);
+			drawCircle(screenpos.first, screenpos.second, cur->getter().r, cur->getter().text,100);
 			cur = cur->getter().next;
 		}
 	}

@@ -9,3 +9,4 @@ std::pair<float, float> simulateBulletTrajectory(float startx, float starty, flo
 std::shared_ptr<allpurposenode> findMiddleOfList(std::shared_ptr<allpurposenode> head);
 std::shared_ptr<allpurposenode> findRandomNodeOfList(std::shared_ptr<allpurposenode> head);
 std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, float centerx, float centery);
+char randomcolorgenerator();

@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <unordered_map>
 #include "../snake.h"
 extern int snakedir;
 extern int default_radius;
@@ -22,3 +23,4 @@ extern double lastMoveTime;
 extern double currentTime;
 extern bool gameover;
 extern bool allowextension;
+extern std::unordered_map<char, int> colorToShape;

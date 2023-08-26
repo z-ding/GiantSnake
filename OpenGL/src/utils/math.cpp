@@ -84,3 +84,13 @@ std::vector < std::pair<float, float>> fibonaccispiral(int numPoints, float cent
     }
     return res;
 }
+char randomcolorgenerator() {
+    int random = rand() % 6;//random number between 0 and 5
+    char t = 'G';//0
+    if (random == 1) t = 'B';
+    else if (random == 2) t = 'Y';
+    else if (random == 3) t = 'W';
+    else if (random == 4) t = 'O';
+    else if (random == 5) t = 'V';
+    return t;
+};

@@ -8,6 +8,9 @@ int logicalHeight
 = 600;
 int windowWidth = 600;
 int windowHeight = 600;
+std::unordered_map<char, int> colorToShape = {
+
+};
 std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
 void fillgrid(int x, int y, std::shared_ptr < allpurposenode> s) {
 	for (int i = 0; i <= x; i++) {
@@ -261,7 +264,7 @@ void snake::drawsnake() {
 	while (current != nullptr) {//simulation, moving upwnward
 		snode node = current->getter();
 		auto screenpos = logicalToScreenCoordinates(node.x, node.y);
-		drawCircle(screenpos.first, screenpos.second, default_radius, node.text);
+		drawCircle(screenpos.first, screenpos.second, default_radius, node.text,100);
 		current = node.next;
 	}
 };
@@ -269,7 +272,7 @@ void snake::displayshootline() {
 	//if (shootline.size()) std::cout << shootline.size() << std::endl;
 	for (int i = 0; i < shootline.size(); i++) {
 		auto screenpos = logicalToScreenCoordinates(shootline[i].first, shootline[i].second);
-		drawCircle(screenpos.first, screenpos.second, 1.0, 'p');
+		drawCircle(screenpos.first, screenpos.second, 1.0, 'p',100);
 	}
 }
 

@@ -62,7 +62,7 @@ std::pair<float, float> enemies::getcenter() {
 void enemies::drawenemy() {
 	for (auto& e : location) {
 		auto screenpos = logicalToScreenCoordinates(e->getter().x, e->getter().y);
-		drawCircle(screenpos.first, screenpos.second, defaultenemyradius, e->getter().text);
+		drawCircle(screenpos.first, screenpos.second, defaultenemyradius, e->getter().text,100);
 	}
 }
 void enemies::rotate() {
@@ -142,7 +142,7 @@ void enemies::movebullet() {
 void enemies::drawbullets() {
 	for (int i = bullets.size() - 1; i >= 0; i--) {
 		auto screenpos = logicalToScreenCoordinates(bullets[i]->locationx, bullets[i]->locationy);
-		drawCircle(screenpos.first, screenpos.second, defaultenemyradius, 'x');
+		drawCircle(screenpos.first, screenpos.second, defaultenemyradius, 'x',100);
 	}
 };
 

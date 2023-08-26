@@ -14,11 +14,7 @@ int items::sizegetter() {
 	return itemlist.size();
 };
 void items::generateoneitem() {
-	int random = rand() % 4;//random number between 0 and 3
-	char t = 'G';
-	if (random == 1) t = 'B';
-	else if (random == 2) t = 'Y';
-	else if (random == 3) t = 'W';
+	char t = randomcolorgenerator();
 	//generate a random position
 	int x = -1;
 	int y = -1;
@@ -33,7 +29,7 @@ void items::generateoneitem() {
 
 void items::drawitems() {
 	for (auto& e : itemlist) {
-		drawCircle(e->getter().x, e->getter().y, default_radius, e->getter().text);
+		drawCircle(e->getter().x, e->getter().y, default_radius, e->getter().text,100);
 	}
 }
 
