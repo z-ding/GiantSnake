@@ -171,7 +171,7 @@ void snake::checkalive(float x, float y) {
 		gameover = true;
 		return;
 	}
-
+	         
 };
 void snake::erase(float x, float y) {
 	std::shared_ptr<allpurposenode> prevnodes = grid[x][y]->getter().prev;
@@ -325,9 +325,6 @@ bool snake::isPerfect() {
 	}
 	std::vector<std::vector<int>> memo(v.size() + 2, { -1,-1,-1 });
 	bool perfect = dfs(v, 0, 0, memo);
-	if (perfect) {
-		std::cout << "perfect" << std::endl;
-	}
 	return perfect;
 }
 

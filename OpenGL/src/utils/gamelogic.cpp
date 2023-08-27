@@ -69,7 +69,7 @@ void render() {
 void nextstageinitialze() {
     Enemies.clear();
     amountEnemy++;
-    itemlist->clearitems();
+    //itemlist->clearitems();
     fibonaccimap = std::make_unique<map>(3);   
     initializeEnemy();
 }
