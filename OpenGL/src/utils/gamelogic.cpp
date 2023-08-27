@@ -38,6 +38,10 @@ void updategame() {
                 //return;
             }
         }
+        if (checkPerfect) {
+            player->isPerfect();
+            checkPerfect = false;
+        }
         lastMoveTime = currentTime; // Reset the timer
         if (!Enemies.size()) {//enemy killed
             std::cout << "go to next stage via top of the screen" << std::endl;

@@ -8,8 +8,15 @@ int logicalHeight
 = 600;
 int windowWidth = 600;
 int windowHeight = 600;
+bool checkPerfect = false;
 std::unordered_map<char, int> colorToShape = {
-
+	{'g',4},
+	{'b',3},
+	{'y',100},
+	{'w',4},
+	{'o',3},
+	{'v',100},
+	{'h',6}
 };
 std::vector<std::vector<std::shared_ptr<allpurposenode>>> grid;
 void fillgrid(int x, int y, std::shared_ptr < allpurposenode> s) {
@@ -145,6 +152,7 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 	if (addlen) {//add a body node at the next loc and set it as tail
 		this->emplace_back(nextx, nexty,char(int(itemt)+32));
 		addlen = false;
+		checkPerfect = true;
 	}
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
@@ -206,6 +214,7 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 			for (float i = heady + 1; i < logicalHeight; i += 1) {
 				if (grid[headx][i]-> getter().text != 'e') {//erase this node
 					erase(headx, i);
+					checkPerfect = true;
 				}
 				shootline.push_back({ headx,i });
 			}
@@ -219,6 +228,7 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 			for (float i = heady - 1; i >=0; i -= 1) {
 				if (grid[headx][i]->getter().text != 'e') {//erase this node
 					erase(headx, i);
+					checkPerfect = true;
 					//break;
 				}
 				shootline.push_back({ headx,i });
@@ -233,6 +243,7 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 			for (float i = headx - 1; i >= 0; i -= 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
+					checkPerfect = true;
 					//break;
 				}
 				shootline.push_back({ i,heady });
@@ -247,6 +258,7 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 			for (float i = headx + 1; i < logicalWidth; i += 1) {
 				if (grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
+					checkPerfect = true;
 					//break;
 				}
 				shootline.push_back({ i,heady });
@@ -264,7 +276,7 @@ void snake::drawsnake() {
 	while (current != nullptr) {//simulation, moving upwnward
 		snode node = current->getter();
 		auto screenpos = logicalToScreenCoordinates(node.x, node.y);
-		drawCircle(screenpos.first, screenpos.second, default_radius, node.text,100);
+		drawCircle(screenpos.first, screenpos.second, default_radius, node.text,colorToShape[node.text]);
 		current = node.next;
 	}
 };
@@ -275,5 +287,47 @@ void snake::displayshootline() {
 		drawCircle(screenpos.first, screenpos.second, 1.0, 'p',100);
 	}
 }
+/*
+a perfect snake can be splitted into subarrays of either
+	1. The subarray consists of exactly 2 same elements (same color and shape)
+	2. The subarray consists of exactly 3 same elements (same color and shape)
+	3. The subarray consists of exactly 3 same shape elements
+*/
 
+bool dfs(std::vector<char>& nums, int startpos, int len, std::vector<std::vector<int>> &memo) {
+	if (startpos >= nums.size() && len == 0) return true;
+	if (startpos + len >= nums.size()) return false;
+	if (len > 2) return false;
+	if (memo[startpos][len] != -1) return memo[startpos][len];
+	bool res = false;
+	if (len == 1) {
+		if (nums[startpos] == nums[startpos + 1]) {
+			res = res || dfs(nums, startpos + 2, 0,memo);
+		}
+	}
+	else if (len == 2) {
+		if (nums[startpos] == nums[startpos + 1] && nums[startpos] == nums[startpos + 2]) {
+			res = res || dfs(nums, startpos + 3, 0,memo);
+		}
+		else if (colorToShape[nums[startpos]] == colorToShape[nums[startpos + 1]] && colorToShape[nums[startpos]] == colorToShape[nums[startpos + 2]]) {
+			res = res || dfs(nums, startpos + 3, 0,memo);
+		}
+	}
+	memo[startpos][len] = res || dfs(nums, startpos, len + 1,memo);
+	return memo[startpos][len];
+}
+bool snake::isPerfect() {
+	auto cur = head -> getter().next;
+	std::vector<char> v;
+	while (cur != nullptr) {
+		v.push_back(cur->getter().text);
+		cur = cur->getter().next;
+	}
+	std::vector<std::vector<int>> memo(v.size() + 2, { -1,-1,-1 });
+	bool perfect = dfs(v, 0, 0, memo);
+	if (perfect) {
+		std::cout << "perfect" << std::endl;
+	}
+	return perfect;
+}
 

@@ -24,5 +24,6 @@ public:
 	bool shooting(std::vector<std::shared_ptr<enemies>> &Enemies);
 	void erase(float x, float y);
 	void displayshootline();
+	bool isPerfect();
 };
 void fillgrid(int x, int y, std::shared_ptr < allpurposenode> node);

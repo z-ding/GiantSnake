@@ -29,7 +29,7 @@ void items::generateoneitem() {
 
 void items::drawitems() {
 	for (auto& e : itemlist) {
-		drawCircle(e->getter().x, e->getter().y, default_radius, e->getter().text,100);
+		drawCircle(e->getter().x, e->getter().y, default_radius, e->getter().text,colorToShape[char(int(e->getter().text) + 32)]);
 	}
 }
 
