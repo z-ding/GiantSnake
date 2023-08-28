@@ -9,6 +9,7 @@
 #include "utils/inputhandler.h"
 #include "utils/global.h"
 #include "utils/gamelogic.h"
+#include "utils/debugger.h"
 #include <WinSock2.h>
 
 // Adjust the speed by changing this value
@@ -39,15 +40,28 @@ int main(void)
         glfwTerminate();
         return -1;
     }
+    GLFWwindow* statsWindow = glfwCreateWindow(windowWidth, windowHeight, "Statistics Window", nullptr, window);
+    if (!statsWindow) {
+        std::cerr << "Statistics window creation failed" << std::endl;
+        glfwTerminate();
+        return -1;
+    }
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     glfwSetKeyCallback(window, keyboardCallback);
-
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+
+    glfwMakeContextCurrent(statsWindow);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glfwMakeContextCurrent(window);
 
     if (glewInit() != GLEW_OK) {
         std::cout << "error glew init" << std::endl;
@@ -64,6 +78,16 @@ int main(void)
         glfwSwapBuffers(window);
         /* Poll for and process events */
         glfwPollEvents();
+        // Clear the statistics window
+        glfwMakeContextCurrent(statsWindow);
+        glClear(GL_COLOR_BUFFER_BIT);
+        // Render your statistics and data here
+        displaygrid();
+        // Swap buffers
+        glfwSwapBuffers(statsWindow);
+        // Restore the game window context
+        glfwMakeContextCurrent(window);
+
     }
     glfwTerminate();
     return 0;

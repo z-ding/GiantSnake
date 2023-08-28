@@ -44,7 +44,7 @@ void updategame() {
         }
         lastMoveTime = currentTime; // Reset the timer
         if (!Enemies.size()) {//enemy killed
-            std::cout << "go to next stage via top of the screen" << std::endl;
+            //std::cout << "go to next stage via top of the screen" << std::endl;
             allowextension = true;
             
         }
@@ -69,7 +69,8 @@ void render() {
 void nextstageinitialze() {
     Enemies.clear();
     amountEnemy++;
-    //itemlist->clearitems();
+    itemlist->clearitems();
+    cap--;
     fibonaccimap = std::make_unique<map>(3);   
     initializeEnemy();
 }

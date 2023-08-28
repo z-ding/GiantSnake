@@ -145,6 +145,7 @@
     <ClCompile Include="src\map.cpp" />
     <ClCompile Include="src\node.cpp" />
     <ClCompile Include="src\snake.cpp" />
+    <ClCompile Include="src\utils\debugger.cpp" />
     <ClCompile Include="src\utils\draw.cpp" />
     <ClCompile Include="src\utils\gamelogic.cpp" />
     <ClCompile Include="src\utils\inputhandler.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="src\map.h" />
     <ClInclude Include="src\node.h" />
     <ClInclude Include="src\snake.h" />
+    <ClInclude Include="src\utils\debugger.h" />
     <ClInclude Include="src\utils\draw.h" />
     <ClInclude Include="src\utils\gamelogic.h" />
     <ClInclude Include="src\utils\global.h" />

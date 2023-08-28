@@ -33,11 +33,12 @@ void items::drawitems() {
 	}
 }
 
-void items::removeoneitem(int _x, int _y) {
+void items::removeoneitem(std::shared_ptr < allpurposenode> i) {
 	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy node
-	std::shared_ptr<allpurposenode> curritem = grid[_x][_y];
-	grid[_x][_y] = e;
-	itemlist.erase(curritem);
+	float x = i->getter().x;
+	float y = i->getter().y;
+	grid[x][y] = e;
+	itemlist.erase(i);
 }
 void items::clearitems() {
 	std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node

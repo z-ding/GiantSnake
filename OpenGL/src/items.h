@@ -9,7 +9,7 @@ public:
 	items(int _cap, std::unordered_set< std::shared_ptr<allpurposenode>>& _list);//default contructor, create an empty list
 	~items();
 	void generateoneitem();
-	void removeoneitem(int _x, int _y);//after collision with the snakehead
+	void removeoneitem(std::shared_ptr < allpurposenode> e);//after collision with the snakehead
 	void drawitems();
 	std::unordered_set< std::shared_ptr<allpurposenode>> listgetter();
 	int sizegetter();

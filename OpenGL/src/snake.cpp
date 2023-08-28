@@ -126,7 +126,7 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 		}
 	}
 	if (!alive) return;
-	char itemt = 'x';
+	char itemt = 'X';
 	for (auto& e : itemlist->listgetter()) {
 		int itemx = e->getter().x;
 		int itemy = e->getter().y;
@@ -134,7 +134,7 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 			addlen = true;
 			itemt = e->getter().text;
 			//remove the item
-			itemlist->removeoneitem(itemx, itemy);
+			itemlist->removeoneitem(e);
 			break;
 		}
 	}
@@ -167,6 +167,7 @@ void snake::checkalive(float x, float y) {
 	int ascii = int(grid[x][y]->getter().text);
 	if (ascii >= 97 && ascii <= 122 && grid[x][y]->getter().text != 'e') {//snake head meet body node
 		//std::cout << "snake game over" << std::endl;
+		std::cout << ascii << std::endl;
 		alive = false;
 		gameover = true;
 		return;
