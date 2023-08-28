@@ -40,8 +40,8 @@ int main(void)
         glfwTerminate();
         return -1;
     }
-    GLFWwindow* statsWindow = glfwCreateWindow(windowWidth, windowHeight, "Statistics Window", nullptr, window);
-    if (!statsWindow) {
+    GLFWwindow* debugWindow = glfwCreateWindow(windowWidth, windowHeight, "Debugging Window", nullptr, window);
+    if (!debugWindow) {
         std::cerr << "Statistics window creation failed" << std::endl;
         glfwTerminate();
         return -1;
@@ -55,7 +55,7 @@ int main(void)
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glfwMakeContextCurrent(statsWindow);
+    glfwMakeContextCurrent(debugWindow);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glOrtho(0, windowWidth, windowHeight, 0, -1, 1);
@@ -79,12 +79,12 @@ int main(void)
         /* Poll for and process events */
         glfwPollEvents();
         // Clear the statistics window
-        glfwMakeContextCurrent(statsWindow);
+        glfwMakeContextCurrent(debugWindow);
         glClear(GL_COLOR_BUFFER_BIT);
         // Render your statistics and data here
         displaygrid();
         // Swap buffers
-        glfwSwapBuffers(statsWindow);
+        glfwSwapBuffers(debugWindow);
         // Restore the game window context
         glfwMakeContextCurrent(window);
 
