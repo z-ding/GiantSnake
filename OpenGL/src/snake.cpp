@@ -108,9 +108,8 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 	float prevy = cur->getter().y;
 	float nextx = prevx + dx;
 	float nexty = prevy + dy;
-	if (allowextension && nexty <= default_radius) {//next stage
+	if (allowextension && nexty <= default_radius) {//next stage, y reducing, but suddenly increase. when tails y> head's y, extension finishes
 		nexty = logicalHeight - default_radius-1;
-		allowextension = false;
 		nextstageinitialze();
 	}
 	checkalive(nextx, nexty);//check whether new head location is valid
@@ -154,6 +153,7 @@ void snake::move(std::unique_ptr<items> &itemlist,  std::shared_ptr<allpurposeno
 		addlen = false;
 		checkPerfect = true;
 	}
+	if (allowextension && tail->getter().y >= head->getter().y) allowextension = false;
 	//std::cout << "moving " << headx + dx << "," << heady + dy << std::endl;
 }
 void snake::checkalive(float x, float y) {
@@ -175,6 +175,7 @@ void snake::checkalive(float x, float y) {
 	         
 };
 void snake::erase(float x, float y) {
+	auto noneed = grid[x][y];
 	std::shared_ptr<allpurposenode> prevnodes = grid[x][y]->getter().prev;
 	std::shared_ptr<allpurposenode> nextnodes = grid[x][y]->getter().next;
 	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy node
@@ -188,6 +189,7 @@ void snake::erase(float x, float y) {
 		auto cur = nextnodes;
 		int prevx = grid[x][y]->getter().x;
 		int prevy = grid[x][y]->getter().y;
+		grid[x][y] = e;
 		while (cur != nullptr) {
 			int nextx = cur->getter().x;
 			int nexty = cur->getter().y;
@@ -198,12 +200,14 @@ void snake::erase(float x, float y) {
 			prevy = nexty;
 			cur = cur->getter().next;
 		}
-	}	
+	}
+	noneed.reset();
 }
 bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
-	if (shoot) {
+	if (shoot && !allowextension) {
 		float headx = head->getter().x;
 		float heady = head->getter().y;
+		bool shootself = true;
 		switch (snakedir) {
 		case 1://down
 			for (int i = Enemies.size() - 1; i >= 0; i--) {
@@ -213,9 +217,10 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 			}
 
 			for (float i = heady + 1; i < logicalHeight; i += 1) {
-				if (grid[headx][i]-> getter().text != 'e') {//erase this node
+				if (shootself && grid[headx][i]-> getter().text != 'e') {//erase this node
 					erase(headx, i);
 					checkPerfect = true;
+					shootself = false;
 				}
 				shootline.push_back({ headx,i });
 			}
@@ -227,9 +232,10 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 				}
 			}
 			for (float i = heady - 1; i >=0; i -= 1) {
-				if (grid[headx][i]->getter().text != 'e') {//erase this node
+				if (shootself && grid[headx][i]->getter().text != 'e') {//erase this node
 					erase(headx, i);
 					checkPerfect = true;
+					shootself = false;
 					//break;
 				}
 				shootline.push_back({ headx,i });
@@ -242,9 +248,10 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 				}
 			}
 			for (float i = headx - 1; i >= 0; i -= 1) {
-				if (grid[i][heady]->getter().text != 'e') {//erase this node
+				if (shootself && grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
 					checkPerfect = true;
+					shootself = false;
 					//break;
 				}
 				shootline.push_back({ i,heady });
@@ -257,9 +264,10 @@ bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
 				}
 			}
 			for (float i = headx + 1; i < logicalWidth; i += 1) {
-				if (grid[i][heady]->getter().text != 'e') {//erase this node
+				if (shootself && grid[i][heady]->getter().text != 'e') {//erase this node
 					erase(i, heady);
 					checkPerfect = true;
+					shootself = false;
 					//break;
 				}
 				shootline.push_back({ i,heady });

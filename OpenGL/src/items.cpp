@@ -34,10 +34,10 @@ void items::drawitems() {
 }
 
 void items::removeoneitem(std::shared_ptr < allpurposenode> i) {
-	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy node
+	std::shared_ptr < allpurposenode> empty = std::make_shared<allpurposenode>('e');//dummy node
 	float x = i->getter().x;
 	float y = i->getter().y;
-	grid[x][y] = e;
+	grid[x][y] = empty;
 	itemlist.erase(i);
 }
 void items::clearitems() {
