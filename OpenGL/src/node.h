@@ -21,6 +21,7 @@ public:
 	~allpurposenode();//destructor
 	snode getter();
 	void nodexysetter(float _x, float _y);
+	void nodetextsetter(char c);
 	friend void connectnodes(std::shared_ptr<allpurposenode> n1, std::shared_ptr<allpurposenode> n2);
 
 };

@@ -176,11 +176,13 @@ void snake::checkalive(float x, float y) {
 };
 void snake::erase(float x, float y) {
 	auto noneed = grid[x][y];
+	//std::cout << "shooting at" << x << "," << y << std::endl;
 	std::shared_ptr<allpurposenode> prevnodes = grid[x][y]->getter().prev;
 	std::shared_ptr<allpurposenode> nextnodes = grid[x][y]->getter().next;
 	std::shared_ptr < allpurposenode> e = std::make_shared<allpurposenode>('e');//dummy node
-	if (nextnodes == nullptr) {//shoot on tail, set prenodes as tail
-		tail = prevnodes;
+	if (nextnodes == nullptr) {//shoot on tail, set prenodes as tail	
+		tail = tail->getter().prev;
+		prevnodes->getter().next = nullptr;
 		grid[x][y] = e;
 	}
 	else {
@@ -194,17 +196,21 @@ void snake::erase(float x, float y) {
 			int nextx = cur->getter().x;
 			int nexty = cur->getter().y;
 			grid[nextx][nexty] = e;
+			//std::cout << "cleared at" << nextx << "," << nexty << std::endl;
 			cur->nodexysetter(prevx, prevy);
 			grid[prevx][prevy] = cur;
+			//std::cout << "filledd at" << prevx << "," << prevy << std::endl;
 			prevx = nextx;
 			prevy = nexty;
 			cur = cur->getter().next;
+
 		}
 	}
+	std::cout << tail->getter().text << std::endl;
 	noneed.reset();
 }
 bool snake::shooting(std::vector<std::shared_ptr<enemies>> &Enemies) {
-	if (shoot && !allowextension) {
+	if (shoot ) {//&& !allowextension
 		float headx = head->getter().x;
 		float heady = head->getter().y;
 		bool shootself = true;

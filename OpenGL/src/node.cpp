@@ -29,6 +29,9 @@ void allpurposenode::nodexysetter(float _x, float _y) {
 	x = _x;
 	y = _y;
 }
+void allpurposenode::nodetextsetter(char c) {
+	text = c;
+};
 void connectnodes(std::shared_ptr<allpurposenode> n1, std::shared_ptr<allpurposenode> n2) {
 	n1->next = n2;
 	n2->prev = n1;

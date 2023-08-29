@@ -24,10 +24,11 @@ void updategame() {
     if (itemlist->sizegetter() < cap) {
         itemlist->generateoneitem();
     }
-    bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
+
     currentTime = glfwGetTime();
+    bool showshootline = player->shooting(Enemies);//shoot if space key is pressed
     if (currentTime - lastMoveTime >= MOVE_INTERVAL) {
-        player->move(itemlist, snakeloc, fibonaccimap); // Update the snake's position
+        player->move(itemlist, snakeloc, fibonaccimap); // Update the snake's position        
         for (auto& e : Enemies) {
             e->move(player->gethead());
             e->rotate();//move and rotate the enemy
